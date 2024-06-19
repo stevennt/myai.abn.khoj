@@ -78,26 +78,26 @@ async def set_notion_config(token: str, user: KhojUser):
 
 
 def create_khoj_token(user: KhojUser, name=None):
-    "Create Khoj API key for user"
+    "Create ABN API key for user"
     token = f"kk-{secrets.token_urlsafe(32)}"
     name = name or f"{generate_random_name().title()}"
     return KhojApiUser.objects.create(token=token, user=user, name=name)
 
 
 async def acreate_khoj_token(user: KhojUser, name=None):
-    "Create Khoj API key for user"
+    "Create ABN API key for user"
     token = f"kk-{secrets.token_urlsafe(32)}"
     name = name or f"{generate_random_name().title()}"
     return await KhojApiUser.objects.acreate(token=token, user=user, name=name)
 
 
 def get_khoj_tokens(user: KhojUser):
-    "Get all Khoj API keys for user"
+    "Get all ABN API keys for user"
     return list(KhojApiUser.objects.filter(user=user))
 
 
 async def delete_khoj_token(user: KhojUser, token: str):
-    "Delete Khoj API Key for user"
+    "Delete ABN API Key for user"
     await KhojApiUser.objects.filter(token=token, user=user).adelete()
 
 

@@ -589,7 +589,7 @@ To get started, just start typing below. You can also type / to see a list of co
             // Generate backend API URL to execute query
             let url = `/api/chat?q=${encodeURIComponent(query)}&n=${resultsCount}&client=web&stream=true&conversation_id=${conversationID}&region=${region}&city=${city}&country=${countryName}&timezone=${timezone}`;
 
-            // Call specified Khoj API
+            // Call specified ABN API
             let response = await fetch(url);
             let rawResponse = "";
             let references = null;
@@ -1154,7 +1154,7 @@ To get started, just start typing below. You can also type / to see a list of co
             let chatInput = document.getElementById("chat-input");
             chatInput.classList.remove("option-enabled");
 
-            // Call specified Khoj API
+            // Call specified ABN API
             websocket.send(query);
             let rawResponse = "";
             let references = {};

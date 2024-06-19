@@ -72,8 +72,8 @@ export class KhojSettingTab extends PluginSettingTab {
                     backendStatusEl.setText(backendStatusMessage);
                 }));
         new Setting(containerEl)
-            .setName('Khoj API Key')
-            .setDesc('Use Khoj Cloud with your Khoj API Key')
+            .setName('ABN API Key')
+            .setDesc('Use Khoj Cloud with your ABN API Key')
             .addText(text => text
                 .setValue(`${this.plugin.settings.khojApiKey}`)
                 .onChange(async (value) => {

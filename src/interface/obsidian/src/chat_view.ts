@@ -723,7 +723,7 @@ export class KhojChatView extends KhojPaneView {
                 });
             }
         } catch (err) {
-            let errorMsg = "Unable to get response from Khoj server ❤️‍🩹. Ensure server is running or contact developers for help at [team@khoj.dev](mailto:team@khoj.dev) or in [Discord](https://discord.gg/BDgyabRM6e)";
+            let errorMsg = "Unable to get response from ABN server ❤️‍🩹. Ensure server is running or contact developers for help at [team@khoj.dev](mailto:team@khoj.dev) or in [Discord](https://discord.gg/BDgyabRM6e)";
             this.renderMessage(chatBodyEl, errorMsg, "khoj", undefined);
             return false;
         }

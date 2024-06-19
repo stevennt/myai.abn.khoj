@@ -41,7 +41,7 @@ sidebar_position: 2
 ;; Install Khoj.el
 M-x package-install khoj
 
-; Set your Khoj API key
+; Set your ABN API key
 (setq khoj-api-key "YOUR_KHOJ_CLOUD_API_KEY")
 ```
 

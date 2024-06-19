@@ -23,7 +23,7 @@ Khoj will use these files to provide contextual responses when you search or cha
 
 1. Install the [Khoj Desktop app](https://khoj.dev/downloads) for your OS
 2. Generate an API key on the [Khoj Web App](https://app.khoj.dev/config#clients)
-3. Set your Khoj API Key on the *Settings* page of the Khoj Desktop app
+3. Set your ABN API Key on the *Settings* page of the Khoj Desktop app
 4. [Optional] Add any files, folders you'd like Khoj to be aware of on the *Settings* page and Click *Save*
 
 ## Interface
