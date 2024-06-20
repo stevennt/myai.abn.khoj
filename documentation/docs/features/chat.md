@@ -62,8 +62,8 @@ You can use conversation file filters to limit the notes used in the chat respon
 
 #### Commands
 Slash commands allows you to change what Khoj uses to respond to your query
-- **/notes**: Limit chat to only respond using your notes, not just Khoj's general world knowledge as reference
-- **/general**: Limit chat to only respond using Khoj's general world knowledge, not using your notes as reference
+- **/notes**: Limit chat to only respond using your notes, not just ABN's general world knowledge as reference
+- **/general**: Limit chat to only respond using ABN's general world knowledge, not using your notes as reference
 - **/default**: Allow chat to respond using your notes or it's general knowledge as reference. It's the default behavior when no slash command is used
 - **/online**: Use online information and incorporate it in the prompt to the LLM to send you a response.
 - **/image**: Generate an image in response to your query.

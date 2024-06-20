@@ -50,7 +50,7 @@ function filenameToMimeType (filename: TFile): string {
 
 export async function updateContentIndex(vault: Vault, setting: KhojSetting, lastSync: Map<TFile, number>, regenerate: boolean = false): Promise<Map<TFile, number>> {
     // Get all markdown, pdf files in the vault
-    console.log(`Khoj: Updating Khoj content index...`)
+    console.log(`ABN: Updating content index...`)
     const files = vault.getFiles().filter(file => file.extension === 'md' || file.extension === 'markdown' || file.extension === 'pdf');
     const binaryFileTypes = ['pdf']
     let countOfFilesToIndex = 0;

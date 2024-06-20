@@ -24,7 +24,7 @@ keywords: ["khoj", "khoj ai", "khoj docs", "khoj documentation", "khoj features"
 </div>
 
 ## Introduction
-Welcome to the Khoj Docs! This is the best place to get setup and explore Khoj's features.
+Welcome to the Khoj Docs! This is the best place to get setup and explore ABN's features.
 
 - Khoj is an open source, personal AI
 - You can [chat](/features/chat) with it about anything. It'll use files you shared with it to respond, when relevant

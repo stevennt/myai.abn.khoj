@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0">
-        <title>Khoj: {{ public_conversation_slug | replace("-", " ")}}</title>
+        <title>ABN: {{ public_conversation_slug | replace("-", " ")}}</title>
 
         <link rel="stylesheet" href="/static/assets/khoj.css?v={{ khoj_version }}">
         <link rel="icon" type="image/png" sizes="128x128" href="/static/assets/icons/favicon-128x128.png?v={{ khoj_version }}">
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="/static/assets/markdown-it.min.js?v={{ khoj_version }}"></script>
     <script>
         let welcome_message = `
-Hi, I am Khoj, your open, personal AI 👋🏽. I can:
+Hi, I am ABN Copilot, your open, personal AI 👋🏽. I can:
 - 🧠 Answer general knowledge questions
 - 💡 Be a sounding board for your ideas
 - 📜 Chat with your notes & documents
@@ -33,8 +33,6 @@ Hi, I am Khoj, your open, personal AI 👋🏽. I can:
 - 🎙️ Listen to your audio messages (use the mic by the input box to speak your message)
 - 📚 Understand files you drag & drop here
 - 👩🏾‍🚀 Be tuned to your conversation needs via [agents](./agents)
-
-Get the Khoj [Desktop](https://khoj.dev/downloads), [Obsidian](https://docs.khoj.dev/clients/obsidian#setup), [Emacs](https://docs.khoj.dev/clients/emacs#setup) apps to search, chat with your 🖥️ computer docs. You can manage all the files you've shared with me at any time by going to [your settings](/config/content-source/computer/).
 
 To get started, just start typing below. You can also type / to see a list of commands.
 `.trim()

@@ -145,7 +145,7 @@
 
         function renderMessage(message, by, dt=null, annotations=null, raw=false, renderType="append") {
             let message_time = formatDate(dt ?? new Date());
-            let by_name =  by == "khoj" ? "🏮 Khoj" : "🤔 You";
+            let by_name =  by == "khoj" ? "ABN Copilot" : "🤔 You";
             let formattedMessage = formatHTMLMessage(message, raw);
 
             // Create a new div for the chat message
