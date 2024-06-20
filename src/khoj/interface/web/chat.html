@@ -13,7 +13,7 @@
                        font-src https://assets.khoj.dev https://fonts.gstatic.com;
                        child-src 'none';
                        object-src 'none';">
-        <title>Khoj - Chat</title>
+        <title>ABNCopilot - Chat</title>
 
         <link rel="stylesheet" href="/static/assets/khoj.css?v={{ khoj_version }}">
         <link rel="icon" type="image/png" sizes="128x128" href="/static/assets/icons/favicon-128x128.png?v={{ khoj_version }}">
@@ -1133,7 +1133,7 @@ To get started, just start typing below. You can also type / to see a list of co
 
             let newResponseEl = document.createElement("div");
             newResponseEl.classList.add("chat-message", "khoj");
-            newResponseEl.attributes["data-meta"] = "🏮 Khoj at " + formatDate(new Date());
+            newResponseEl.attributes["data-meta"] = "ABNCopilot at " + formatDate(new Date());
             chatBody.appendChild(newResponseEl);
 
             let newResponseTextEl = document.createElement("div");
@@ -1201,7 +1201,7 @@ To get started, just start typing below. You can also type / to see a list of co
 
                         // Disable chat input field and update placeholder text
                         document.getElementById("chat-input").setAttribute("disabled", "disabled");
-                        document.getElementById("chat-input").setAttribute("placeholder", "Configure ABNCopilot to enable chat");
+                        document.getElementById("chat-input").setAttribute("placeholder", "Configure ABN Copilot to enable chat");
                     } else if (data.status != "ok") {
                         throw new Error(data.message);
                     } else {

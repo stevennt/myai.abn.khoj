@@ -43,9 +43,9 @@ async def send_welcome_email(name, email):
 
     resend.Emails.send(
         {
-            "sender": "team@khoj.dev",
+            "sender": "contact@abnasia.org",
             "to": email,
-            "subject": f"{name}, four ways to use Khoj" if name else "Four ways to use Khoj",
+            "subject": f"{name}, four ways to use Khoj" if name else "Four ways to use ABN Copilot",
             "html": html_content,
         }
     )
@@ -66,7 +66,7 @@ async def send_welcome_email(name, email):
 
 async def send_query_feedback(uquery, kquery, sentiment, user_email):
     if not is_resend_enabled():
-        logger.debug(f"Sentiment: {sentiment}, Query: {uquery}, Khoj Response: {kquery}")
+        logger.debug(f"Sentiment: {sentiment}, Query: {uquery}, ABN Response: {kquery}")
         return
 
     logger.info(f"Sending feedback email for query {uquery}")
@@ -82,8 +82,8 @@ async def send_query_feedback(uquery, kquery, sentiment, user_email):
     # send feedback from two fixed accounts
     r = resend.Emails.send(
         {
-            "sender": "saba@khoj.dev",
-            "to": "team@khoj.dev",
+            "sender": "contact@abnasia.org",
+            "to": "contact@abnasia.org",
             "subject": f"User Feedback",
             "html": html_content,
         }
@@ -108,7 +108,7 @@ def send_task_email(name, email, query, result, subject, is_image=False):
 
     r = resend.Emails.send(
         {
-            "sender": "Khoj <khoj@khoj.dev>",
+            "sender": "contact@abnasia.org",
             "to": email,
             "subject": f"✨ {subject}",
             "html": html_content,

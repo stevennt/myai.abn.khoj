@@ -204,7 +204,7 @@ export function getBackendStatusMessage(
         return `🌈 Welcome to Khoj! Get your API key from ${khojUrl}/config#clients and set it in the Khoj plugin settings on Obsidian`;
 
     if (!connectedToServer)
-        return `❗️Could not connect to Khoj at ${khojUrl}. Ensure your can access it`;
+        return `❗️Could not connect to ABNCopilot at ${khojUrl}. Ensure your can access it`;
     else if (!userEmail)
         return `✅ Connected to Khoj. ❗️Get a valid API key from ${khojUrl}/config#clients to log in`;
     else if (userEmail === 'default@example.com')

@@ -177,7 +177,7 @@ NO-PAGING FILTER))
 (defvar khoj--reference-count 0 "Track number of references currently in chat bufffer.")
 (defun khoj--improve-sort () "Use cross-encoder to improve sorting of search results." (interactive) (khoj--incremental-search t))
 (defun khoj--make-search-keymap (&optional existing-keymap)
-  "Setup keymap to configure ABNCopilot search. Build of EXISTING-KEYMAP when passed."
+  "Setup keymap to configure ABN Copilot search. Build of EXISTING-KEYMAP when passed."
   (let ((enabled-content-types (khoj--get-enabled-content-types))
         (kmap (or existing-keymap (make-sparse-keymap))))
     (define-key kmap (kbd "C-c RET") #'khoj--improve-sort)

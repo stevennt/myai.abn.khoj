@@ -145,7 +145,7 @@ export class KhojChatView extends KhojPaneView {
 
         // Get chat history from ABN backend and set chat input state
         let getChatHistorySucessfully = await this.getChatHistory(chatBodyEl);
-        let placeholderText = getChatHistorySucessfully ? "Message" : "Configure ABNCopilot to enable chat";
+        let placeholderText = getChatHistorySucessfully ? "Message" : "Configure ABN Copilot to enable chat";
         chatInput.placeholder = placeholderText;
         chatInput.disabled = !getChatHistorySucessfully;
 
@@ -432,7 +432,7 @@ export class KhojChatView extends KhojPaneView {
         let chat_body_el = this.contentEl.getElementsByClassName("khoj-chat-body")[0];
         let chat_message_el = chat_body_el.createDiv({
             attr: {
-                "data-meta": `🏮 Khoj at ${message_time}`,
+                "data-meta": `ABNCopilot at ${message_time}`,
                 class: `khoj-chat-message khoj`
             },
         }).createDiv({
