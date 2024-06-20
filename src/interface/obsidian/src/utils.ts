@@ -90,7 +90,7 @@ export async function updateContentIndex(vault: Vault, setting: KhojSetting, las
         const filesGroup = fileData.slice(i, i + 1000);
         const formData = new FormData();
         filesGroup.forEach(fileItem => { formData.append('files', fileItem.blob, fileItem.path) });
-        // Call Khoj backend to update index with all markdown, pdf files
+        // Call ABN backend to update index with all markdown, pdf files
         const response = await fetch(`${setting.khojUrl}/api/v1/index/update?force=${regenerate}&client=obsidian`, {
             method: 'POST',
             headers: {

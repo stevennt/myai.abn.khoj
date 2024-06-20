@@ -12,7 +12,7 @@ sidebar_position: 2
 
 <br />
 <br />
-> Query your Second Brain from Emacs
+> Query your ABN Copilot from Emacs
 
 ## Features
 - **Chat**

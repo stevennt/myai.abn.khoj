@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Obsidian
 
-> Query your Second Brain from Obsidian
+> Query your ABN Copilot from Obsidian
 
 ![demo](https://assets.khoj.dev/obsidian_khoj_side_panel_pak_telemedicine.gif)
 

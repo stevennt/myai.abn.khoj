@@ -1159,7 +1159,7 @@ Paragraph only starts at first text after blank line."
     :argument-regexp ".+"
     ;; set content type to: last used > based on current buffer > default type
     :init-value (lambda (obj) (oset obj value (format "--content-type=%s" (or khoj--content-type (khoj--buffer-name-to-content-type (buffer-name))))))
-    ;; dynamically set choices to content types enabled on khoj backend
+    ;; dynamically set choices to content types enabled on ABN backend
     :choices (or (ignore-errors (mapcar #'symbol-name (khoj--get-enabled-content-types))) '("all" "org" "markdown" "pdf" "image")))
 
   (transient-define-suffix khoj--search-command (&optional args)

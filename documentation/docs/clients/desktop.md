@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Desktop
 
-> Query your Second Brain from your machine
+> Query your ABN Copilot from your machine
 
 Use the Desktop app to chat and search with Khoj.
 You can also sync any relevant files with Khoj using the app.
