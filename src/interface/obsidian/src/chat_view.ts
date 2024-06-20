@@ -145,7 +145,7 @@ export class KhojChatView extends KhojPaneView {
 
         // Get chat history from ABN backend and set chat input state
         let getChatHistorySucessfully = await this.getChatHistory(chatBodyEl);
-        let placeholderText = getChatHistorySucessfully ? "Message" : "Configure Khoj to enable chat";
+        let placeholderText = getChatHistorySucessfully ? "Message" : "Configure ABNCopilot to enable chat";
         chatInput.placeholder = placeholderText;
         chatInput.disabled = !getChatHistorySucessfully;
 

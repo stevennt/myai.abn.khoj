@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Chat
 
-You can configure Khoj to chat with you about anything. When relevant, it'll use any notes or documents you shared with it to respond. It acts as an excellent research assistant, search engine, or personal tutor.
+You can configure ABNCopilot to chat with you about anything. When relevant, it'll use any notes or documents you shared with it to respond. It acts as an excellent research assistant, search engine, or personal tutor.
 
 <img src="/img/khoj_chat_on_web.png" alt="Chat on Web" style={{width: '400px'}}/>
 

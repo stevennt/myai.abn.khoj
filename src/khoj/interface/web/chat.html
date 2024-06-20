@@ -34,7 +34,7 @@
     <script src="https://assets.khoj.dev/higlightjs/highlight.min.js"></script>
     <script>
         let welcome_message = `
-Hi, I am Khoj, your open, personal AI 👋🏽. I can:
+My name is ABN Copilot, a business-oriented AI developed by AbnAsia.org. I can:
 - 🧠 Answer general knowledge questions
 - 💡 Be a sounding board for your ideas
 - 📜 Chat with your notes & documents
@@ -43,8 +43,6 @@ Hi, I am Khoj, your open, personal AI 👋🏽. I can:
 - 🎙️ Listen to your audio messages (use the mic by the input box to speak your message)
 - 📚 Understand files you drag & drop here
 - 👩🏾‍🚀 Be tuned to your conversation needs via [agents](./agents)
-
-Get the Khoj [Desktop](https://khoj.dev/downloads), [Obsidian](https://docs.khoj.dev/clients/obsidian#setup), [Emacs](https://docs.khoj.dev/clients/emacs#setup) apps to search, chat with your 🖥️ computer docs. You can manage all the files you've shared with me at any time by going to [your settings](/config/content-source/computer/).
 
 To get started, just start typing below. You can also type / to see a list of commands.
 `.trim()
@@ -567,7 +565,7 @@ To get started, just start typing below. You can also type / to see a list of co
 
             let new_response = document.createElement("div");
             new_response.classList.add("chat-message", "khoj");
-            new_response.attributes["data-meta"] = "🏮 Khoj at " + formatDate(new Date());
+            new_response.attributes["data-meta"] = " ABNCopilot at " + formatDate(new Date());
             chat_body.appendChild(new_response);
 
             let newResponseText = document.createElement("div");
@@ -1203,7 +1201,7 @@ To get started, just start typing below. You can also type / to see a list of co
 
                         // Disable chat input field and update placeholder text
                         document.getElementById("chat-input").setAttribute("disabled", "disabled");
-                        document.getElementById("chat-input").setAttribute("placeholder", "Configure Khoj to enable chat");
+                        document.getElementById("chat-input").setAttribute("placeholder", "Configure ABNCopilot to enable chat");
                     } else if (data.status != "ok") {
                         throw new Error(data.message);
                     } else {
@@ -1244,8 +1242,6 @@ To get started, just start typing below. You can also type / to see a list of co
 - 🎙️ Hear you talk (use the mic by the input box to say your message out loud)
 - 📚 Understand files you drag & drop here
 - 👩🏾‍🚀 Be tuned to your conversation needs via [agents](./agents)
-
-Get the Khoj [Desktop](https://khoj.dev/downloads), [Obsidian](https://docs.khoj.dev/clients/obsidian#setup), or [Emacs](https://docs.khoj.dev/clients/emacs#setup) app to keep your files in sync. You can manage all the files you've shared with me at any time by going to [your settings](/config/content-source/computer/).
 
 To get started, just start typing below. You can also type / to see a list of commands.
 
@@ -1885,7 +1881,7 @@ To get started, just start typing below. You can also type / to see a list of co
                 allFiles = data;
                 var nofilesmessage = document.getElementsByClassName("no-files-message")[0];
                 if(allFiles.length === 0){
-                    nofilesmessage.innerHTML = `<a class="inline-chat-link" href="https://docs.khoj.dev/category/clients/">How to upload files</a>`;
+                    nofilesmessage.innerHTML = `<a class="inline-chat-link" href="https://abnasia.org/">How to upload files</a>`;
                     document.getElementById("file-toggle-button").style.display = "none";
                 }
                 else{
