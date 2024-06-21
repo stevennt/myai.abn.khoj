@@ -43,7 +43,7 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_HOST=database
+      - POSTGRES_HOST=abnkhojdatabase
       - POSTGRES_PORT=5432
       - KHOJ_DJANGO_SECRET_KEY=secret
       - KHOJ_DEBUG=False
