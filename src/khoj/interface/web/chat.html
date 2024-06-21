@@ -1280,7 +1280,9 @@ My name is ABN Copilot, a business-oriented AI developed by AbnAsia.org. My life
                         agentAvatarElement.src = agentAvatar;
                         agentNameElement.textContent = agentName;
                         agentLinkElement.setAttribute("href", `/agent/${agentMetadata.slug}`);
-                        renderMessage(`Hello! I'm [${agentName}](/agent/${agentMetadata.slug}). I can:
+                        renderMessage(`Hello! I'm [${agentName}](/agent/${agentMetadata.slug}).
+                        `, "khoj")
+                        /* renderMessage(`Hello! I'm [${agentName}](/agent/${agentMetadata.slug}). I can:
 - 🧠 Answer general knowledge questions
 - 🔎 Get real-time answers from the internet
 - 📜 Find relevant info in your notes & documents
@@ -1293,7 +1295,7 @@ My name is ABN Copilot, a business-oriented AI developed by AbnAsia.org. My life
 To get started, just start typing below. You can also type / to see a list of commands.
 
 **What's on your mind today?**
-                        `, "khoj")
+                        `, "khoj") */
 
                         if (agentOwnedByUser) {
                             let agentOwnedByUserElement = document.getElementById("agent-owned-by-user");
