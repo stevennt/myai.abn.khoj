@@ -50,7 +50,7 @@ function filenameToMimeType (filename: TFile): string {
 
 export async function updateContentIndex(vault: Vault, setting: KhojSetting, lastSync: Map<TFile, number>, regenerate: boolean = false): Promise<Map<TFile, number>> {
     // Get all markdown, pdf files in the vault
-    console.log(`Khoj: Updating Khoj content index...`)
+    console.log(`ABN: Updating content index...`)
     const files = vault.getFiles().filter(file => file.extension === 'md' || file.extension === 'markdown' || file.extension === 'pdf');
     const binaryFileTypes = ['pdf']
     let countOfFilesToIndex = 0;
@@ -90,7 +90,7 @@ export async function updateContentIndex(vault: Vault, setting: KhojSetting, las
         const filesGroup = fileData.slice(i, i + 1000);
         const formData = new FormData();
         filesGroup.forEach(fileItem => { formData.append('files', fileItem.blob, fileItem.path) });
-        // Call Khoj backend to update index with all markdown, pdf files
+        // Call ABN backend to update index with all markdown, pdf files
         const response = await fetch(`${setting.khojUrl}/api/v1/index/update?force=${regenerate}&client=obsidian`, {
             method: 'POST',
             headers: {
@@ -101,13 +101,13 @@ export async function updateContentIndex(vault: Vault, setting: KhojSetting, las
 
         if (!response.ok) {
             if (response.status === 429) {
-                error_message = `❗️Failed to sync your content with Khoj server. Requests were throttled. Upgrade your subscription or try again later.`;
+                error_message = `❗️Failed to sync your content with ABN server. Requests were throttled. Upgrade your subscription or try again later.`;
                 break;
             } else if (response.status === 404) {
-                error_message = `❗️Could not connect to Khoj server. Ensure you can connect to it.`;
+                error_message = `❗️Could not connect to ABN server. Ensure you can connect to it.`;
                 break;
             } else {
-                error_message = `❗️Failed to sync your content with Khoj server. Raise issue on Khoj Discord or Github\nError: ${response.statusText}`;
+                error_message = `❗️Failed to sync your content with ABN server. Raise issue on Khoj Discord or Github\nError: ${response.statusText}`;
             }
         } else {
             responses.push(await response.text());
@@ -204,7 +204,7 @@ export function getBackendStatusMessage(
         return `🌈 Welcome to Khoj! Get your API key from ${khojUrl}/config#clients and set it in the Khoj plugin settings on Obsidian`;
 
     if (!connectedToServer)
-        return `❗️Could not connect to Khoj at ${khojUrl}. Ensure your can access it`;
+        return `❗️Could not connect to ABNCopilot at ${khojUrl}. Ensure your can access it`;
     else if (!userEmail)
         return `✅ Connected to Khoj. ❗️Get a valid API key from ${khojUrl}/config#clients to log in`;
     else if (userEmail === 'default@example.com')
@@ -354,7 +354,7 @@ export function getLinkToEntry(sourceFiles: TFile[], chosenFile: string, chosenE
         // This finds longest path match when multiple files have same name
         .sort((a, b) => b.path.length - a.path.length)
         // The first match is the best file match across OS
-        // e.g Khoj server on Linux, Obsidian vault on Android
+        // e.g ABN server on Linux, Obsidian vault on Android
         .find(file => chosenFile.replace(/\\/g, "/").endsWith(file.path))
 
     // Return link to vault file at heading of chosen search result

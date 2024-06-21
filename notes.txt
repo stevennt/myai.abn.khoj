@@ -1,0 +1,239 @@
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+Setup GROQ in KHOJ:
+- https://docs.khoj.dev/get-started/setup
+
+- http://localhost:42110/server/admin/database/openaiprocessorconversationconfig/
+    API key
+    Server API base URL: https://api.groq.com/openai/v1/chat
+        I tried: https://api.groq.com/openai/v1/chat/completions
+        I think it should be: https://api.groq.com/openai/v1/chat
+
+- http://localhost:42110/server/admin/database/chatmodeloptions/:
+    Chat model: llama3-70b-8192
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+
+
+
+
+=================================================================START
+OpenAi:
+
+gpt-4-turbo-preview
+
+
+GROQ: 
+
+This works
+curl "https://api.groq.com/openai/v1/chat/completions" \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer pastethegroqapikeyhere" \
+  -d '{
+         "messages": [
+           {
+             "role": "user",
+             "content": "Please explain the Ukraine war today"
+           }
+         ],
+         "model": "llama3-8b-8192",
+         "temperature": 1,
+         "max_tokens": 1024,
+         "top_p": 1,
+         "stream": true,
+         "stop": null
+       }'
+
+If no need for stream:
+curl "https://api.groq.com/openai/v1/chat/completions" \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer pastethegroqapikeyhere" \
+  -d '{
+         "messages": [
+           {
+             "role": "user",
+             "content": "Please explain the Ukraine war today"
+           }
+         ],
+         "model": "llama3-8b-8192",
+         "temperature": 1,
+         "max_tokens": 1024,
+         "top_p": 1,
+         "stream": false,
+         "stop": null
+       }'
+
+
+curl "https://api.groq.com/openai/v1/chat/completions" \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${GROQ_API_KEY}" \
+  -d '{
+         "messages": [
+           {
+             "role": "user",
+             "content": ""
+           }
+         ],
+         "model": "llama3-8b-8192",
+         "temperature": 1,
+         "max_tokens": 1024,
+         "top_p": 1,
+         "stream": true,
+         "stop": null
+       }'
+  
+
+
+
+
+https://console.groq.com/docs/models
+llama3-70b-8192
+Context Window: 8,192 tokens
+
+mixtral-8x7b-32768
+Context Window: 32,768 tokens
+
+GROQ API URL:
+https://discord.com/channels/1207099205563457597/1207719622040879154/threads/1236428122015141908
+The playground can generate a curl command which you can use a reference if you don't want to use our SDK.
+
+Go to https://console.groq.com/
+Click "View Code" in the bottom right
+Select "curl" as your language in the top right of the code box
+
+The url for chat completions is https://api.groq.com/openai/v1/chat/completions 
+
+var url = "https://api.groq.com/openai/v1/chat/completions";
+var headers = ["Authorization: Bearer " + api_key, "Content-Type: application/json"];
+var body = {
+    "messages": [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": "your history"},
+        {"role": "user", "content": "your new prompt"},
+    ],
+    "model": "llama3-70b-8192"
+}
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+
+
+=================================================================START
+
+
+=================================================================END
+

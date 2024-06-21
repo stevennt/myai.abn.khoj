@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Obsidian
 
-> Query your Second Brain from Obsidian
+> Query your ABN Copilot from Obsidian
 
 ![demo](https://assets.khoj.dev/obsidian_khoj_side_panel_pak_telemedicine.gif)
 
@@ -24,7 +24,7 @@ sidebar_position: 3
   1. Open [Khoj](https://obsidian.md/plugins?id=khoj) from the *Community plugins* tab in Obsidian settings panel
   2. Click *Install*, then *Enable* on the Khoj plugin page in Obsidian
   3. Generate an API key on the [Khoj Web App](https://app.khoj.dev/config#clients)
-  4. Set your Khoj API Key in the Khoj plugin settings in Obsidian
+  4. Set your ABN API Key in the Khoj plugin settings in Obsidian
 
 See the official [Obsidian Plugin Docs](https://help.obsidian.md/Extending+Obsidian/Community+plugins) for more details on installing Obsidian plugins.
 
@@ -51,6 +51,6 @@ See [Khoj Search](/features/search) for more details. Use [query filters](/misce
   3. Click the *Update* button next to Khoj, if available
 
 ## Troubleshooting
-  - Open the Khoj plugin settings pane, to configure Khoj
+  - Open the Khoj plugin settings pane, to configure ABN Copilot
   - Toggle Enable/Disable Khoj, if setting changes have not applied
   - Click *Update* button to force index to refresh, if results are failing or stale

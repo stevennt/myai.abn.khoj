@@ -83,7 +83,7 @@ This command will run any pending migrations in your application.
 python3 src/manage.py migrate
 ```
 
-### Start Khoj Server
+### Start ABN Server
 
 While we're using Django for the ORM, we're still using the FastAPI server for the API. This command automatically scaffolds the Django application in the backend.
 

@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # WhatsApp
 
-> Query your Second Brain from WhatsApp
+> Query your ABN Copilot from WhatsApp
 
 Text [+1 (848) 800 4242](https://wa.me/18488004242) or scan [this QR code](https://khoj.dev/whatsapp) on your phone to chat with Khoj on WhatsApp.
 
