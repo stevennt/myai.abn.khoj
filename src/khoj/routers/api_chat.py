@@ -799,7 +799,7 @@ async def websocket_endpoint(
             await send_complete_llm_response(json.dumps(content_obj))
             continue
 
-        await send_status_update(f"**Generating a well-informed response**")
+        await send_status_update(f"**Working...**")
         llm_response, chat_metadata = await agenerate_chat_response(
             defiltered_query,
             meta_log,

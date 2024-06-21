@@ -215,7 +215,7 @@ def truncate_messages(
             encoder = AutoTokenizer.from_pretrained(default_tokenizer)
             state.pretrained_tokenizers[default_tokenizer] = encoder
         logger.warning(
-            f"Fallback to default chat model tokenizer: {tokenizer_name}.\nConfigure tokenizer for unsupported model: {model_name} in Khoj settings to improve context stuffing."
+            f"Fallback to default chat model tokenizer: {tokenizer_name}.\nConfigure tokenizer for unsupported model: {model_name} in settings to improve context stuffing."
         )
 
     # Extract system message from messages

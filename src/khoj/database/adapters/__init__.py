@@ -512,9 +512,9 @@ class ClientApplicationAdapters:
 
 
 class AgentAdapters:
-    DEFAULT_AGENT_NAME = "Khoj"
+    DEFAULT_AGENT_NAME = "ABN Copilot"
     DEFAULT_AGENT_AVATAR = "https://assets.khoj.dev/lamp-128.png"
-    DEFAULT_AGENT_SLUG = "khoj"
+    DEFAULT_AGENT_SLUG = "abncopilot"
 
     @staticmethod
     async def aget_agent_by_slug(agent_slug: str, user: KhojUser):
