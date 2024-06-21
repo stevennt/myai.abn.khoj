@@ -4,7 +4,7 @@ networks:
     external: true
 
 services:
-  database:
+  abnkhojdatabase:
     image: ankane/pgvector
     ports:
       - "5432:5432"
@@ -19,9 +19,9 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-  server:
+  abnkhoj:
     depends_on:
-      database:
+      abnkhojdatabase:
         condition: service_healthy
     # Use the following line to use the latest version of khoj. Otherwise, it will build from source.
     # image: ghcr.io/khoj-ai/khoj:latest
@@ -52,6 +52,10 @@ services:
       # Uncomment the following lines to make your instance publicly accessible. Replace the domain with your domain. Proceed with caution, especially if you are using anonymous mode.
       # - KHOJ_NO_HTTPS=True
       - KHOJ_DOMAIN=chat.abnasia.org
+    labels:
+      - traefik.http.routers.abnkhoj.rule=Host(`chat.abnasia.org`)
+      - traefik.http.routers.abnkhoj.tls=true
+      - traefik.http.routers.abnkhoj.tls.certresolver=lets-encrypt
     networks:
       - web
 
