@@ -2,6 +2,8 @@ version: "3.9"
 networks:
   web:
     external: true
+  ainetwork:
+    external: false
 
 services:
   abnkhojdatabase:
@@ -19,6 +21,9 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    networks:
+      - ainetwork
+
   abnkhoj:
     depends_on:
       abnkhojdatabase:
@@ -43,7 +48,7 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_HOST=database
+      - POSTGRES_HOST=abnkhojdatabase
       - POSTGRES_PORT=5432
       - KHOJ_DJANGO_SECRET_KEY=secret
       - KHOJ_DEBUG=False
@@ -58,6 +63,7 @@ services:
       - traefik.http.routers.abnkhoj.tls.certresolver=lets-encrypt
     networks:
       - web
+      - ainetwork
 
     command: --host="0.0.0.0" --port=42110 -vv --anonymous-mode
 
