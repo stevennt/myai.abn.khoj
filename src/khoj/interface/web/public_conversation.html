@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0">
-        <title>Khoj: {{ public_conversation_slug | replace("-", " ")}}</title>
+        <title>ABN: {{ public_conversation_slug | replace("-", " ")}}</title>
 
         <link rel="stylesheet" href="/static/assets/khoj.css?v={{ khoj_version }}">
         <link rel="icon" type="image/png" sizes="128x128" href="/static/assets/icons/favicon-128x128.png?v={{ khoj_version }}">
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="/static/assets/markdown-it.min.js?v={{ khoj_version }}"></script>
     <script>
         let welcome_message = `
-Hi, I am Khoj, your open, personal AI 👋🏽. I can:
+Hi, I am ABN Copilot, your open, personal AI 👋🏽. I can:
 - 🧠 Answer general knowledge questions
 - 💡 Be a sounding board for your ideas
 - 📜 Chat with your notes & documents
@@ -33,8 +33,6 @@ Hi, I am Khoj, your open, personal AI 👋🏽. I can:
 - 🎙️ Listen to your audio messages (use the mic by the input box to speak your message)
 - 📚 Understand files you drag & drop here
 - 👩🏾‍🚀 Be tuned to your conversation needs via [agents](./agents)
-
-Get the Khoj [Desktop](https://khoj.dev/downloads), [Obsidian](https://docs.khoj.dev/clients/obsidian#setup), [Emacs](https://docs.khoj.dev/clients/emacs#setup) apps to search, chat with your 🖥️ computer docs. You can manage all the files you've shared with me at any time by going to [your settings](/config/content-source/computer/).
 
 To get started, just start typing below. You can also type / to see a list of commands.
 `.trim()
@@ -542,7 +540,7 @@ To get started, just start typing below. You can also type / to see a list of co
                 .then(data => {
                     if (data.detail) {
                         // If the server returns a 500 error with detail, render a setup hint.
-                        let setupMsg = "Hi 👋🏾, to start chatting add available chat models options via <a class='inline-chat-link' href='/server/admin'>the Django Admin panel</a> on the Server";
+                        let setupMsg = "To start chatting add available chat models options via <a class='inline-chat-link' href='/server/admin'>the Admin Panel</a> on the Server";
                         renderMessage(setupMsg, "khoj", null, null, true);
                     } else if (data.status != "ok") {
                         throw new Error(data.message);
@@ -656,7 +654,7 @@ Learn more [here](https://khoj.dev).
             event.preventDefault();
 
             if (!isLoggedIn) {
-                document.getElementById("login-modal").style.display = "block";
+                document.getElementById("login-modal").style.display = "flex";
                 return;
             }
 
@@ -851,6 +849,13 @@ Learn more [here](https://khoj.dev).
         <div id="login-modal" style="display: none;">
             <img class="khoj-logo" src="/static/assets/icons/favicon-128x128.png" alt="Khoj"></img>
             <div class="login-modal-title">Login to continue</div>
+            <!-- Sign in with Magic Link -->
+            <div class="khoj-magic-link">
+                <input type="email" id="email" placeholder="Email" required>
+                <button id="magic-link-button">Send Magic Link</button>
+            </div>
+            <!-- Divider -->
+            <div style="text-align: center; font-size: 16px; font-weight: 500; border-top: 1px solid black;">OR</div>
             <!-- Sign Up/Login with Google OAuth -->
             <div
                 class="g_id_signin"
@@ -964,6 +969,40 @@ Learn more [here](https://khoj.dev).
         if (chatNav) {
             chatNav.classList.add("khoj-nav-selected");
         }
+
+        const magicLinkButton = document.getElementById('magic-link-button');
+        const emailInput = document.getElementById('email');
+
+        magicLinkButton.addEventListener('click', async () => {
+            const email = emailInput.value;
+            if (!email) {
+                alert('Please enter a valid email address');
+                return;
+            }
+
+            if (!email.includes('@')) {
+                alert('Please enter a valid email address');
+                return;
+            }
+
+            magicLinkButton.disabled = true;
+            magicLinkButton.innerText = 'Check your email for a sign-in link!';
+
+            const response = await fetch('/auth/magic', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ "email": email }),
+            })
+
+            if (response.status === 200) {
+                console.log('Magic link sent to your email');
+            } else {
+                alert('Failed to send magic link');
+            }
+        });
+
     </script>
     <style>
         html, body {
@@ -1405,10 +1444,6 @@ Learn more [here](https://khoj.dev).
         }
 
         div#login-modal {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: 1fr auto auto 1fr;
-            gap: 32px;
             min-height: 300px;
             z-index: 1;
             position: absolute;
@@ -1419,6 +1454,45 @@ Learn more [here](https://khoj.dev).
             border-radius: 8px;
             padding: 40px;
             background: linear-gradient(145deg, var(--background-color), var(--primary-hover));
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .khoj-magic-link {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            text-align: center;
+        }
+
+        #email {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid var(--main-text-color);
+            border-radius: 5px;
+        }
+
+        #email:focus {
+            box-shadow: 0 0 10px var(--main-text-color);
+        }
+
+        #magic-link-button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid var(--main-text-color);
+            border-radius: 5px;
+            width: 100%;
+            background: var(--main-text-color);
+            color: var(--frosted-background-color);
+            cursor: pointer;
+        }
+
+        #magic-link-button:hover {
+            box-shadow: 0 0 10px var(--main-text-color);
         }
 
         div.g_id_signin {

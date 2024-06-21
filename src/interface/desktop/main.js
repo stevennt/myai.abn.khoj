@@ -371,7 +371,7 @@ async function syncData (regenerate = false) {
     try {
         pushDataToKhoj(regenerate);
         const date = new Date();
-        console.log('Pushing data to Khoj at: ', date);
+        console.log('Pushing data to ABNCopilot at: ', date);
     } catch (err) {
         console.error(err);
     }
@@ -383,7 +383,7 @@ async function deleteAllFiles () {
         store.set('folders', []);
         pushDataToKhoj(true);
         const date = new Date();
-        console.log('Pushing data to Khoj at: ', date);
+        console.log('Pushing data to ABNCopilot at: ', date);
     } catch (err) {
         console.error(err);
     }
@@ -448,7 +448,7 @@ const createWindow = (tab = 'chat.html') => {
         try {
             pushDataToKhoj();
             const date = new Date();
-            console.log('Pushing data to Khoj at: ', date);
+            console.log('Pushing data to ABNCopilot at: ', date);
             win.webContents.send('update-state', state);
         } catch (err) {
             console.error(err);

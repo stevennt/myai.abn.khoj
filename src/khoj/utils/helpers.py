@@ -115,6 +115,8 @@ def get_file_type(file_type: str, file_content: bytes) -> tuple[str, str]:
         return "org", encoding
     elif file_type in ["application/pdf"]:
         return "pdf", encoding
+    elif file_type in ["application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]:
+        return "docx", encoding
     elif file_type in ["image/jpeg"]:
         return "jpeg", encoding
     elif file_type in ["image/png"]:
@@ -311,7 +313,7 @@ class ConversationCommand(str, Enum):
 
 
 command_descriptions = {
-    ConversationCommand.General: "Only talk about information that relies on Khoj's general knowledge, not your personal knowledge base.",
+    ConversationCommand.General: "Only talk about information that relies on ABN's general knowledge, not your personal knowledge base.",
     ConversationCommand.Notes: "Only talk about information that is available in your knowledge base.",
     ConversationCommand.Default: "The default command when no command specified. It intelligently auto-switches between general and notes mode.",
     ConversationCommand.Online: "Search for information on the internet.",

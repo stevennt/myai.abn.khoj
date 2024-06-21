@@ -50,7 +50,7 @@ function filenameToMimeType (filename: TFile): string {
 
 export async function updateContentIndex(vault: Vault, setting: KhojSetting, lastSync: Map<TFile, number>, regenerate: boolean = false): Promise<Map<TFile, number>> {
     // Get all markdown, pdf files in the vault
-    console.log(`Khoj: Updating Khoj content index...`)
+    console.log(`ABN: Updating content index...`)
     const files = vault.getFiles().filter(file => file.extension === 'md' || file.extension === 'markdown' || file.extension === 'pdf');
     const binaryFileTypes = ['pdf']
     let countOfFilesToIndex = 0;
@@ -90,7 +90,7 @@ export async function updateContentIndex(vault: Vault, setting: KhojSetting, las
         const filesGroup = fileData.slice(i, i + 1000);
         const formData = new FormData();
         filesGroup.forEach(fileItem => { formData.append('files', fileItem.blob, fileItem.path) });
-        // Call Khoj backend to update index with all markdown, pdf files
+        // Call ABN backend to update index with all markdown, pdf files
         const response = await fetch(`${setting.khojUrl}/api/v1/index/update?force=${regenerate}&client=obsidian`, {
             method: 'POST',
             headers: {
@@ -204,7 +204,7 @@ export function getBackendStatusMessage(
         return `🌈 Welcome to Khoj! Get your API key from ${khojUrl}/config#clients and set it in the Khoj plugin settings on Obsidian`;
 
     if (!connectedToServer)
-        return `❗️Could not connect to Khoj at ${khojUrl}. Ensure your can access it`;
+        return `❗️Could not connect to ABNCopilot at ${khojUrl}. Ensure your can access it`;
     else if (!userEmail)
         return `✅ Connected to Khoj. ❗️Get a valid API key from ${khojUrl}/config#clients to log in`;
     else if (userEmail === 'default@example.com')

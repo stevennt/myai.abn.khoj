@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Obsidian
 
-> Query your Second Brain from Obsidian
+> Query your ABN Copilot from Obsidian
 
 ![demo](https://assets.khoj.dev/obsidian_khoj_side_panel_pak_telemedicine.gif)
 
@@ -51,6 +51,6 @@ See [Khoj Search](/features/search) for more details. Use [query filters](/misce
   3. Click the *Update* button next to Khoj, if available
 
 ## Troubleshooting
-  - Open the Khoj plugin settings pane, to configure Khoj
+  - Open the Khoj plugin settings pane, to configure ABN Copilot
   - Toggle Enable/Disable Khoj, if setting changes have not applied
   - Click *Update* button to force index to refresh, if results are failing or stale

@@ -143,9 +143,9 @@ export class KhojChatView extends KhojPaneView {
         let sendImg = <SVGElement>send.getElementsByClassName("lucide-arrow-up-circle")[0]
         sendImg.addEventListener('click', async (_) => { await this.chat() });
 
-        // Get chat history from Khoj backend and set chat input state
+        // Get chat history from ABN backend and set chat input state
         let getChatHistorySucessfully = await this.getChatHistory(chatBodyEl);
-        let placeholderText = getChatHistorySucessfully ? "Message" : "Configure Khoj to enable chat";
+        let placeholderText = getChatHistorySucessfully ? "Message" : "Configure ABN Copilot to enable chat";
         chatInput.placeholder = placeholderText;
         chatInput.disabled = !getChatHistorySucessfully;
 
@@ -432,7 +432,7 @@ export class KhojChatView extends KhojPaneView {
         let chat_body_el = this.contentEl.getElementsByClassName("khoj-chat-body")[0];
         let chat_message_el = chat_body_el.createDiv({
             attr: {
-                "data-meta": `🏮 Khoj at ${message_time}`,
+                "data-meta": `ABNCopilot at ${message_time}`,
                 class: `khoj-chat-message khoj`
             },
         }).createDiv({
@@ -681,7 +681,7 @@ export class KhojChatView extends KhojPaneView {
     }
 
     async getChatHistory(chatBodyEl: HTMLElement): Promise<boolean> {
-        // Get chat history from Khoj backend
+        // Get chat history from ABN backend
         let chatUrl = `${this.setting.khojUrl}/api/chat/history?client=obsidian`;
         if (chatBodyEl.dataset.conversationId) {
             chatUrl += `&conversation_id=${chatBodyEl.dataset.conversationId}`;
@@ -698,7 +698,7 @@ export class KhojChatView extends KhojPaneView {
 
             if (responseJson.detail) {
                 // If the server returns error details in response, render a setup hint.
-                let setupMsg = "Hi 👋🏾, to start chatting add available chat models options via [the Django Admin panel](/server/admin) on the Server";
+                let setupMsg = "To start chatting add available chat models options via [the Admin Panel](/server/admin) on the Server";
                 this.renderMessage(chatBodyEl, setupMsg, "khoj", undefined);
 
                 return false;
@@ -779,7 +779,7 @@ export class KhojChatView extends KhojPaneView {
             chatBodyEl.dataset.conversationId = conversationID;
         }
 
-        // Get chat response from Khoj backend
+        // Get chat response from ABN backend
         let encodedQuery = encodeURIComponent(query);
         let chatUrl = `${this.setting.khojUrl}/api/chat?q=${encodedQuery}&n=${this.setting.resultsCount}&client=obsidian&stream=true&region=${this.location.region}&city=${this.location.city}&country=${this.location.countryName}&timezone=${this.location.timezone}`;
         let responseElement = this.createKhojResponseDiv();
@@ -842,7 +842,7 @@ export class KhojChatView extends KhojPaneView {
             }
         } catch (err) {
             console.log(`Khoj chat response failed with\n${err}`);
-            let errorMsg = "Sorry, unable to get response from Khoj backend ❤️‍🩹. Retry or contact developers for help at <a href=mailto:'team@khoj.dev'>team@khoj.dev</a> or <a href='https://discord.gg/BDgyabRM6e'>on Discord</a>";
+            let errorMsg = "Sorry, unable to get response from ABN backend ❤️‍🩹. Retry or contact developers for help at <a href=mailto:'team@khoj.dev'>team@khoj.dev</a> or <a href='https://discord.gg/BDgyabRM6e'>on Discord</a>";
             responseElement.innerHTML = errorMsg
         }
     }
@@ -918,7 +918,7 @@ export class KhojChatView extends KhojPaneView {
                 body: requestBody,
             });
 
-            // Parse response from Khoj backend
+            // Parse response from ABN backend
             if (response.status === 200) {
                 console.log(response);
                 chatInput.value += response.json.text.trimStart();

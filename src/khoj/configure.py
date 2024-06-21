@@ -68,7 +68,7 @@ class UserAuthenticationBackend(AuthenticationBackend):
         if not self.khojuser_manager.filter(username="default").exists():
             default_user = self.khojuser_manager.create_user(
                 username="default",
-                email="default@example.com",
+                email="contact@abnasia.org",
                 password="default",
             )
             renewal_date = make_aware(datetime.strptime("2100-04-01", "%Y-%m-%d"))

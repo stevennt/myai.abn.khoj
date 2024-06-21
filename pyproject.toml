@@ -87,13 +87,14 @@ dependencies = [
     "cron-descriptor == 1.4.3",
     "django_apscheduler == 0.6.2",
     "anthropic == 0.26.1",
+    "docx2txt == 0.8"
 ]
 dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://khoj.dev"
-Documentation = "https://docs.khoj.dev"
-Code = "https://github.com/khoj-ai/khoj"
+Homepage = "https://abnasia.org"
+Documentation = "https://abnasia.org"
+Code = "https://abnasia.org"
 
 [project.scripts]
 khoj = "khoj.main:run"
