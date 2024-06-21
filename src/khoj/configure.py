@@ -195,7 +195,7 @@ def configure_server(
 ):
     # Update Config
     if config == None:
-        logger.info(f"🚨 Khoj is not configured.\nInitializing it with a default config.")
+        logger.info(f"🚨 ABN Copilot is not configured.\nInitializing it with a default config.")
         config = FullConfig()
     state.config = config
 
