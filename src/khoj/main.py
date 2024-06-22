@@ -135,7 +135,7 @@ def run(should_start_server=True):
     fh.setLevel(logging.DEBUG)
     logger.addHandler(fh)
 
-    logger.info("🌘 Starting Khoj")
+    logger.info("🌘 Starting ABN Copilot")
 
     # Setup task scheduler
     poll_task_scheduler()

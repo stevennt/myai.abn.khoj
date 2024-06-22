@@ -190,7 +190,7 @@ def update(
 ):
     user = request.user.object
     if not state.config:
-        error_msg = f"🚨 Khoj is not configured.\nConfigure it via http://localhost:42110/config, plugins or by editing {state.config_file}."
+        error_msg = f"🚨 ABN Copilot is not configured.\nConfigure it via http://localhost:42110/config, plugins or by editing {state.config_file}."
         logger.warning(error_msg)
         raise HTTPException(status_code=500, detail=error_msg)
     try:
@@ -344,11 +344,13 @@ async def extract_references_and_questions(
         elif conversation_config.model_type == ChatModelOptions.ModelType.OPENAI:
             openai_chat_config = conversation_config.openai_config
             api_key = openai_chat_config.api_key
+            base_url = openai_chat_config.api_base_url
             chat_model = conversation_config.chat_model
             inferred_queries = extract_questions(
                 defiltered_query,
                 model=chat_model,
                 api_key=api_key,
+                api_base_url=base_url,
                 conversation_log=meta_log,
                 location_data=location_data,
                 max_tokens=conversation_config.max_prompt_size,

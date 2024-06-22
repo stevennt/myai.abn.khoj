@@ -24,6 +24,9 @@
     <script type="text/javascript" src="/static/assets/markdown-it.min.js?v={{ khoj_version }}"></script>
     <script>
         let welcome_message = `
+Hi, I am ABN Copilot, your open, personal AI 👋🏽.
+`.trim()
+        /* let welcome_message = `
 Hi, I am ABN Copilot, your open, personal AI 👋🏽. I can:
 - 🧠 Answer general knowledge questions
 - 💡 Be a sounding board for your ideas
@@ -35,7 +38,7 @@ Hi, I am ABN Copilot, your open, personal AI 👋🏽. I can:
 - 👩🏾‍🚀 Be tuned to your conversation needs via [agents](./agents)
 
 To get started, just start typing below. You can also type / to see a list of commands.
-`.trim()
+`.trim() */
         let isLoggedIn = "{{ username }}" !== "None"
         let publicConversationSlug = "{{ public_conversation_slug }}";
 
@@ -570,7 +573,9 @@ To get started, just start typing below. You can also type / to see a list of co
                         agentAvatarElement.src = agentAvatar;
                         agentNameElement.textContent = agentName;
                         agentLinkElement.setAttribute("href", `/agent/${agentMetadata.slug}`);
-                        renderMessage(`Hello! I'm [${agentName}](/agent/${agentMetadata.slug}). I can:
+                        renderMessage(`Hello! I'm [${agentName}](/agent/${agentMetadata.slug}).
+                        `, "khoj")
+                        /* renderMessage(`Hello! I'm [${agentName}](/agent/${agentMetadata.slug}). I can:
 - 🧠 Answer general knowledge questions
 - 🔎 Get real-time answers from the internet
 - 📜 Find relevant info in your notes & documents
@@ -583,7 +588,7 @@ To get started, just start typing below. You can also type / to see a list of co
 Learn more [here](https://khoj.dev).
 
 **What's on your mind today?**
-                        `, "khoj")
+                        `, "khoj") */
 
 
                         let agentMetadataElement = document.getElementById("agent-metadata");
