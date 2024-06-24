@@ -27,7 +27,7 @@ export class KhojSearchModal extends SuggestModal<SearchResult> {
         this.scope.register(['Mod'], 'Enter', async () => {
             // Re-rank when explicitly triggered by user
             this.rerank = true
-            // Trigger input event to get and render (reranked) results from khoj backend
+            // Trigger input event to get and render (reranked) results from ABN backend
             this.inputEl.dispatchEvent(new Event('input'));
             // Rerank disabled by default to satisfy latency requirements for incremental search
             this.rerank = false
@@ -76,7 +76,7 @@ export class KhojSearchModal extends SuggestModal<SearchResult> {
                 // Set input element to contents of active markdown file
                 // truncate to first 8,000 characters to avoid hitting query size limits
                 this.inputEl.value = await this.app.vault.read(file).then(file_str => file_str.slice(0, 42110));
-                // Trigger search to get and render similar notes from khoj backend
+                // Trigger search to get and render similar notes from ABN backend
                 this.inputEl.dispatchEvent(new Event('input'));
                 this.rerank = false
             }
@@ -87,12 +87,12 @@ export class KhojSearchModal extends SuggestModal<SearchResult> {
     }
 
     async getSuggestions(query: string): Promise<SearchResult[]> {
-        // Setup Query Khoj backend for search results
+        // Setup Query ABN backend for search results
         let encodedQuery = encodeURIComponent(query);
         let searchUrl = `${this.setting.khojUrl}/api/search?q=${encodedQuery}&n=${this.setting.resultsCount}&r=${this.rerank}&client=obsidian`;
         let headers = { 'Authorization': `Bearer ${this.setting.khojApiKey}` }
 
-        // Get search results from Khoj backend
+        // Get search results from ABN backend
         let response = await request({ url: `${searchUrl}`, headers: headers });
 
         // Parse search results

@@ -584,7 +584,7 @@ async def websocket_endpoint(
         user_message_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         conversation_commands = [get_conversation_command(query=q, any_references=True)]
 
-        await send_status_update(f"**👀 Understanding Query**: {q}")
+        await send_status_update(f"**Understanding Query**: {q}")
 
         meta_log = conversation.conversation_log
         is_automated_task = conversation_commands == [ConversationCommand.AutomatedTask]
@@ -595,7 +595,7 @@ async def websocket_endpoint(
             await send_status_update(f"**🗃️ Chose Data Sources to Search:** {conversation_commands_str}")
 
             mode = await aget_relevant_output_modes(q, meta_log, is_automated_task)
-            await send_status_update(f"**🧑🏾‍💻 Decided Response Mode:** {mode.value}")
+            await send_status_update(f"**Decided Response Mode:** {mode.value}")
             if mode not in conversation_commands:
                 conversation_commands.append(mode)
 
@@ -622,7 +622,7 @@ async def websocket_endpoint(
                     contextual_data = " ".join([file.raw_text for file in file_object])
                     if not q:
                         q = "Create a general summary of the file"
-                    await send_status_update(f"**🧑🏾‍💻 Constructing Summary Using:** {file_object[0].file_name}")
+                    await send_status_update(f"**Constructing Summary Using:** {file_object[0].file_name}")
                     response = await extract_relevant_summary(q, contextual_data)
                     response_log = str(response)
                     await send_complete_llm_response(response_log)
@@ -799,7 +799,7 @@ async def websocket_endpoint(
             await send_complete_llm_response(json.dumps(content_obj))
             continue
 
-        await send_status_update(f"**💭 Generating a well-informed response**")
+        await send_status_update(f"**Generating a well-informed response**")
         llm_response, chat_metadata = await agenerate_chat_response(
             defiltered_query,
             meta_log,

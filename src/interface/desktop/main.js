@@ -199,7 +199,7 @@ function pushDataToKhoj (regenerate = false) {
             }
         }
 
-        // Collect all updated or newly created files since last sync to index on Khoj server
+        // Collect all updated or newly created files since last sync to index on ABN server
         try {
             let encoding = binaryFileTypes.includes(file.split('.').pop()) ? "binary" : "utf8";
             let mimeType = filenameToMimeType(file) + (encoding === "utf8" ? "; charset=UTF-8" : "");
@@ -218,7 +218,7 @@ function pushDataToKhoj (regenerate = false) {
         }
     }
 
-    // Mark deleted files for removal from index on Khoj server
+    // Mark deleted files for removal from index on ABN server
     for (const syncedFile of lastSync) {
         if (!filesToPush.includes(syncedFile.path)) {
             fileObj = new Blob([""], { type: filenameToMimeType(syncedFile.path) });
@@ -226,7 +226,7 @@ function pushDataToKhoj (regenerate = false) {
         }
     }
 
-    // Send collected files to Khoj server for indexing
+    // Send collected files to ABN server for indexing
     const hostURL = store.get('hostURL') || KHOJ_URL;
     const headers = { 'Authorization': `Bearer ${store.get("khojToken")}` };
     let requests = [];
@@ -257,7 +257,7 @@ function pushDataToKhoj (regenerate = false) {
             const win = BrowserWindow.getAllWindows().find(win => win.webContents.getURL().includes('config'));
             if (win) win.webContents.send('needsSubscription', true);
         } else if (error?.code === 'ECONNREFUSED') {
-            state["error"] = `Could not connect to Khoj server. Ensure you can connect to it at ${error.address}:${error.port}.`;
+            state["error"] = `Could not connect to ABN server. Ensure you can connect to it at ${error.address}:${error.port}.`;
         } else {
             currentTime = new Date();
             state["error"] = `Sync was unsuccessful at ${currentTime.toLocaleTimeString()}. Contact team@khoj.dev to report this issue.`;
@@ -371,7 +371,7 @@ async function syncData (regenerate = false) {
     try {
         pushDataToKhoj(regenerate);
         const date = new Date();
-        console.log('Pushing data to Khoj at: ', date);
+        console.log('Pushing data to ABNCopilot at: ', date);
     } catch (err) {
         console.error(err);
     }
@@ -383,13 +383,13 @@ async function deleteAllFiles () {
         store.set('folders', []);
         pushDataToKhoj(true);
         const date = new Date();
-        console.log('Pushing data to Khoj at: ', date);
+        console.log('Pushing data to ABNCopilot at: ', date);
     } catch (err) {
         console.error(err);
     }
 }
 
-// Fetch user info from Khoj server
+// Fetch user info from ABN server
 async function getUserInfo() {
     const getUserInfoURL = `${store.get('hostURL') || KHOJ_URL}/api/v1/user?client=desktop`;
     const headers = { 'Authorization': `Bearer ${store.get('khojToken')}` };
@@ -448,7 +448,7 @@ const createWindow = (tab = 'chat.html') => {
         try {
             pushDataToKhoj();
             const date = new Date();
-            console.log('Pushing data to Khoj at: ', date);
+            console.log('Pushing data to ABNCopilot at: ', date);
             win.webContents.send('update-state', state);
         } catch (err) {
             console.error(err);

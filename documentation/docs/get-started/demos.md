@@ -20,14 +20,14 @@ Check out a couple of demos and screenshots of Khoj in action.
 
 ##### Installation
 
-1. Install Khoj via `pip` and start Khoj backend in a terminal (Run `khoj`)
+1. Install Khoj via `pip` and start ABN backend in a terminal (Run `khoj`)
     ```bash
     python -m pip install khoj-assistant
     khoj
     ```
 2. Install Khoj plugin via Community Plugins settings pane on Obsidian app
     - Check the new Khoj plugin settings
-    - Let Khoj backend index the markdown, pdf, Github markdown files in the current Vault
+    - Let ABN backend index the markdown, pdf, Github markdown files in the current Vault
     - Open Khoj plugin on Obsidian via Search button on Left Pane
     - Search \"*Announce plugin to folks*\" in the [Obsidian Plugin docs](https://marcus.se.net/obsidian-plugin-docs/)
     - Jump to the [search result](https://marcus.se.net/obsidian-plugin-docs/publishing/submit-your-plugin)

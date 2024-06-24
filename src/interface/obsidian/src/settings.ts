@@ -43,7 +43,7 @@ export class KhojSettingTab extends PluginSettingTab {
         const { containerEl } = this;
         containerEl.empty();
 
-        // Add notice whether able to connect to khoj backend or not
+        // Add notice whether able to connect to ABN backend or not
         let backendStatusEl = containerEl.createEl('small', {
             text: getBackendStatusMessage(
                 this.plugin.settings.connectedToBackend,
@@ -57,7 +57,7 @@ export class KhojSettingTab extends PluginSettingTab {
         // Add khoj settings configurable from the plugin settings tab
         new Setting(containerEl)
             .setName('Khoj URL')
-            .setDesc('The URL of the Khoj backend.')
+            .setDesc('The URL of the ABN backend.')
             .addText(text => text
                 .setValue(`${this.plugin.settings.khojUrl}`)
                 .onChange(async (value) => {
@@ -72,8 +72,8 @@ export class KhojSettingTab extends PluginSettingTab {
                     backendStatusEl.setText(backendStatusMessage);
                 }));
         new Setting(containerEl)
-            .setName('Khoj API Key')
-            .setDesc('Use Khoj Cloud with your Khoj API Key')
+            .setName('ABN API Key')
+            .setDesc('Use Khoj Cloud with your ABN API Key')
             .addText(text => text
                 .setValue(`${this.plugin.settings.khojApiKey}`)
                 .onChange(async (value) => {

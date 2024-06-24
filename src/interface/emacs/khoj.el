@@ -64,12 +64,12 @@
 ;; -------------------------
 
 (defcustom khoj-server-url "https://app.khoj.dev"
-  "Location of Khoj API server."
+  "Location of ABN API server."
   :group 'khoj
   :type 'string)
 
 (defcustom khoj-server-is-local t
-  "Is Khoj server on local machine?."
+  "Is ABN server on local machine?."
   :group 'khoj
   :type 'boolean)
 
@@ -173,6 +173,7 @@ NO-PAGING FILTER))
 (defvar khoj--reference-count 0 "Track number of references currently in chat bufffer.")
 (defun khoj--improve-sort () "Use cross-encoder to improve sorting of search results." (interactive) (khoj--incremental-search t))
 (defun khoj--make-search-keymap (&optional existing-keymap)
+
   "Setup keymap to configure Khoj search. Build of EXISTING-KEYMAP when passed."
   (let ((kmap (or existing-keymap (make-sparse-keymap))))
     (define-key kmap (kbd "C-c RET") #'khoj--improve-sort)
@@ -200,12 +201,12 @@ Use `which-key` if available, else display simple message in echo area"
   (or (executable-find "khoj")
       (executable-find "khoj.exe")
       "khoj")
-  "Command to interact with Khoj server."
+  "Command to interact with ABN server."
   :type 'string
   :group 'khoj)
 
 (defcustom khoj-server-args '()
-  "Arguments to pass to Khoj server on startup."
+  "Arguments to pass to ABN server on startup."
   :type '(repeat string)
   :group 'khoj)
 
@@ -219,7 +220,7 @@ Use `which-key` if available, else display simple message in echo area"
       ;; Fallback on systems where python is not
       ;; symlinked to python3.
       "python3"))
-  "The Python interpreter used for the Khoj server.
+  "The Python interpreter used for the ABN server.
 
 Khoj will try to use the system interpreter if it exists. If you wish
 to use a specific python interpreter (from a virtual environment
@@ -285,8 +286,8 @@ Auto invokes setup steps on calling main entrypoint."
                    "-m" "pip" "install" "--upgrade"
                    '("khoj-assistant"))
             0)
-        (message "khoj.el: Failed to install Khoj server. Please install it manually using pip install `khoj-assistant'.\n%s" (buffer-string))
-      (message "khoj.el: Installed and upgraded Khoj server version: %s" (khoj--server-get-version)))))
+        (message "khoj.el: Failed to install ABN server. Please install it manually using pip install `khoj-assistant'.\n%s" (buffer-string))
+      (message "khoj.el: Installed and upgraded ABN server version: %s" (khoj--server-get-version)))))
 
 (defun khoj--server-start ()
   "Start the khoj server."
@@ -330,7 +331,7 @@ Auto invokes setup steps on calling main entrypoint."
                      (internal-default-process-filter process msg))))
     (set-process-query-on-exit-flag khoj--server-process nil)
     (when (not khoj--server-process)
-        (message "khoj.el: Failed to start Khoj server. Please start it manually by running `khoj' on terminal.\n%s" (buffer-string)))))
+        (message "khoj.el: Failed to start ABN server. Please start it manually by running `khoj' on terminal.\n%s" (buffer-string)))))
 
 (defun khoj--server-started? ()
   "Check if the khoj server has been started."
@@ -373,12 +374,12 @@ Auto invokes setup steps on calling main entrypoint."
     (khoj--server-start)))
 
 (defun khoj-setup (&optional interact)
-  "Install and start Khoj server. Get permission if INTERACT is non-nil."
+  "Install and start ABN server. Get permission if INTERACT is non-nil."
   (interactive "p")
   ;; Setup khoj server if not running
   (let* ((not-started (not (khoj--server-started?)))
          (permitted (if (and not-started interact)
-                        (y-or-n-p "Could not connect to Khoj server. Should I install, start it for you?")
+                        (y-or-n-p "Could not connect to ABN server. Should I install, start it for you?")
                       t)))
     ;; If user permits setup of khoj server from khoj.el
     (when permitted
@@ -397,7 +398,7 @@ Auto invokes setup steps on calling main entrypoint."
 ;; -------------------
 
 (defun khoj--server-index-files (&optional force content-type file-paths)
-  "Send files at `FILE-PATHS' to the Khoj server to index for search and chat.
+  "Send files at `FILE-PATHS' to the ABN server to index for search and chat.
 `FORCE' re-indexes all files of `CONTENT-TYPE' even if they are already indexed."
   (interactive)
   (let* ((boundary (format "-------------------------%d" (random (expt 10 10))))
@@ -447,7 +448,7 @@ Specify `BOUNDARY' used to separate files in request header."
 
 (defun khoj--render-update-files-as-request-body (files-to-index boundary)
   "Render `FILES-TO-INDEX', `PREVIOUSLY-INDEXED-FILES' as multi-part form body.
-Use `BOUNDARY' to separate files. This is sent to Khoj server as a POST request."
+Use `BOUNDARY' to separate files. This is sent to ABN server as a POST request."
   (with-temp-buffer
     (set-buffer-multibyte nil)
     (insert "\n")
@@ -467,7 +468,7 @@ Use `BOUNDARY' to separate files. This is sent to Khoj server as a POST request.
 
 (defun khoj--render-delete-files-as-request-body (delete-files boundary)
   "Render `DELETE-FILES' as multi-part form body.
-Use `BOUNDARY' to separate files. This is sent to Khoj server as a POST request."
+Use `BOUNDARY' to separate files. This is sent to ABN server as a POST request."
   (with-temp-buffer
     (set-buffer-multibyte nil)
     (insert "\n")
@@ -499,7 +500,7 @@ Use `BOUNDARY' to separate files. This is sent to Khoj server as a POST request.
 
 
 ;; -------------------------------------------
-;; Render Response from Khoj server for Emacs
+;; Render Response from ABN server for Emacs
 ;; -------------------------------------------
 (defun khoj--construct-find-similar-title (query)
   "Construct title for find-similar QUERY."
@@ -653,7 +654,7 @@ Simplified fork of `org-cycle-content' from Emacs 29.1 to work with >=27.1."
 
 
 ;; --------------
-;; Query Khoj API
+;; Query ABN API
 ;; --------------
 (defun khoj--call-api (path &optional method params callback &rest cbargs)
   "Sync call API at PATH with METHOD and query PARAMS as kv assoc list.
@@ -882,7 +883,7 @@ Call CALLBACK func with response and CBARGS."
                           callback cbargs)))
 
 (defun khoj--get-chat-sessions ()
-  "Get all chat sessions from Khoj server."
+  "Get all chat sessions from ABN server."
   (khoj--call-api "/api/chat/sessions" "GET"))
 
 (defun khoj--get-chat-session (&optional session-id)
@@ -1239,7 +1240,7 @@ Paragraph only starts at first text after blank line."
     :argument-regexp ".+"
     ;; set content type to: last used > based on current buffer > default type
     :init-value (lambda (obj) (oset obj value (format "--content-type=%s" (or khoj--content-type (khoj--buffer-name-to-content-type (buffer-name))))))
-    ;; dynamically set choices to content types enabled on khoj backend
+    ;; dynamically set choices to content types enabled on ABN backend
     :choices (or (ignore-errors (mapcar #'symbol-name (khoj--get-enabled-content-types))) '("all" "org" "markdown" "pdf" "image")))
 
   (transient-define-suffix khoj--search-command (&optional args)
