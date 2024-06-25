@@ -50,8 +50,29 @@ services:
       # - KHOJ_DOMAIN=chat.abnasia.org
     command: --host="0.0.0.0" --port=42110 -vv --anonymous-mode
 
+  backup:
+    image: postgres:13  # Use a PostgreSQL image that includes pg_dump
+    volumes:
+      - ./backups:/backups  # Mount a local directory to store backups
+    environment:
+      POSTGRES_HOST: database
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    command: |
+      bash -c '
+        while true; do
+          FILENAME="backup-$$(date +%Y%m%d-%H%M%S).sql"
+          pg_dump -h $$POSTGRES_HOST -U $$POSTGRES_USER -d $$POSTGRES_DB -f /backups/$$FILENAME
+          echo "Backup completed: $$FILENAME"
+          sleep 3600  # Wait for 1 hour
+        done
+      '
+    depends_on:
+      - database
 
 volumes:
   khoj_config:
   khoj_db:
   khoj_models:
+  backups:  # Add this line
