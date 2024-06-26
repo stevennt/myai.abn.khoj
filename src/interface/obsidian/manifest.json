@@ -1,7 +1,12 @@
 {
 	"id": "khoj",
+<<<<<<< HEAD
 	"name": "ABNCopilot",
 	"version": "1.14.0",
+=======
+	"name": "Khoj",
+	"version": "1.15.0",
+>>>>>>> 4f89319b40cd05adeb6ff15a19b583eedfdd0520
 	"minAppVersion": "0.15.0",
 	"description": "An AI copilot for your Second Brain",
 	"author": "Khoj Inc.",
