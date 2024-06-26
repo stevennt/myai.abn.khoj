@@ -2,9 +2,11 @@ version: "3.9"
 networks:
   web:
     external: true
+  ainetwork:
+    external: false
 
 services:
-  database:
+  abnkhojdatabase:
     image: ankane/pgvector
     ports:
       - "5432:5432"
@@ -19,9 +21,12 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-  server:
+    networks:
+      - ainetwork
+
+  abnkhoj:
     depends_on:
-      database:
+      abnkhojdatabase:
         condition: service_healthy
     # Use the following line to use the latest version of khoj. Otherwise, it will build from source.
     # image: ghcr.io/khoj-ai/khoj:latest
@@ -43,7 +48,7 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_HOST=database
+      - POSTGRES_HOST=abnkhojdatabase
       - POSTGRES_PORT=5432
       - KHOJ_DJANGO_SECRET_KEY=secret
       - KHOJ_DEBUG=False
@@ -52,8 +57,13 @@ services:
       # Uncomment the following lines to make your instance publicly accessible. Replace the domain with your domain. Proceed with caution, especially if you are using anonymous mode.
       # - KHOJ_NO_HTTPS=True
       - KHOJ_DOMAIN=chat.abnasia.org
+    labels:
+      - traefik.http.routers.abnkhoj.rule=Host(`chat.abnasia.org`)
+      - traefik.http.routers.abnkhoj.tls=true
+      - traefik.http.routers.abnkhoj.tls.certresolver=lets-encrypt
     networks:
       - web
+      - ainetwork
 
     command: --host="0.0.0.0" --port=42110 -vv --anonymous-mode
 
