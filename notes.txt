@@ -25,6 +25,12 @@ Need a way to backup data in an easy to control format.
 PULL from Khoj's master to ABN's khoj.master
 https://github.com/stevennt/myai.abn.khoj/compare/khoj.master...khoj-ai:khoj:master
 
+abn khoj:
+DEV to master: 
+  https://github.com/stevennt/myai.abn.khoj/compare/master...stevennt:myai.abn.khoj:DEV
+
+
+
 https://github.com/khoj-ai/khoj/issues
 https://discord.com/channels/1112065956647284756/1112065956647284759
 
