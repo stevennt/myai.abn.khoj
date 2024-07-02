@@ -36,8 +36,8 @@
         let welcome_message = `
 My name is ABN Copilot, a business-oriented AI developed by AbnAsia.org. My life's mission is to chit chat with you.
 `.trim()
-        const allowedExtensions = ['text/org', 'text/markdown', 'text/plain', 'text/html', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-        const allowedFileEndings = ['org', 'md', 'txt', 'html', 'pdf', 'docx'];
+        const allowedExtensions = ['text/org', 'text/markdown', 'text/plain', 'text/html', 'application/pdf', 'image/jpeg', 'image/png', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        const allowedFileEndings = ['org', 'md', 'txt', 'html', 'pdf', 'jpg', 'jpeg', 'png', 'docx'];
         let chatOptions = [];
         function createCopyParentText(message) {
             return function(event) {
@@ -962,7 +962,12 @@ My name is ABN Copilot, a business-oriented AI developed by AbnAsia.org. My life
                                 fileType = "text/html";
                             } else if (fileExtension === "pdf") {
                                 fileType = "application/pdf";
-                            } else {
+                            } else if (fileExtension === "jpg" || fileExtension === "jpeg"){
+                                fileType = "image/jpeg";
+                            } else if (fileExtension === "png") {
+                                fileType = "image/png";
+                            }
+                            else {
                                 // Skip this file if its type is not supported
                                 resolve();
                                 return;
