@@ -2,7 +2,7 @@ import json
 import logging
 import math
 from datetime import datetime
-from typing import Dict, Optional
+from typing import Any, Dict, List, Optional
 from urllib.parse import unquote
 
 from asgiref.sync import sync_to_async
@@ -15,6 +15,7 @@ from websockets import ConnectionClosedOK
 
 from khoj.database.adapters import (
     ConversationAdapters,
+    DataStoreAdapters,
     EntryAdapters,
     FileObjectAdapters,
     PublicConversationAdapters,
@@ -28,11 +29,7 @@ from khoj.processor.conversation.prompts import (
 )
 from khoj.processor.conversation.utils import save_to_conversation_log
 from khoj.processor.speech.text_to_speech import generate_text_to_speech
-from khoj.processor.tools.online_search import (
-    online_search_enabled,
-    read_webpages,
-    search_online,
-)
+from khoj.processor.tools.online_search import read_webpages, search_online
 from khoj.routers.api import extract_references_and_questions
 from khoj.routers.helpers import (
     ApiUserRateLimiter,
@@ -92,6 +89,53 @@ def get_file_filter(request: Request, conversation_id: str) -> Response:
         if file in file_list:
             file_filters.append(file)
     return Response(content=json.dumps(file_filters), media_type="application/json", status_code=200)
+
+
+class FactCheckerStoreDataFormat(BaseModel):
+    factToVerify: str
+    response: str
+    references: Any
+    childReferences: List[Any]
+    runId: str
+    modelUsed: Dict[str, Any]
+
+
+class FactCheckerStoreData(BaseModel):
+    runId: str
+    storeData: FactCheckerStoreDataFormat
+
+
+@api_chat.post("/store/factchecker", response_class=Response)
+@requires(["authenticated"])
+async def store_factchecker(request: Request, common: CommonQueryParams, data: FactCheckerStoreData):
+    user = request.user.object
+
+    update_telemetry_state(
+        request=request,
+        telemetry_type="api",
+        api="store_factchecker",
+        **common.__dict__,
+    )
+    fact_checker_key = f"factchecker_{data.runId}"
+    await DataStoreAdapters.astore_data(data.storeData.model_dump_json(), fact_checker_key, user, private=False)
+    return Response(content=json.dumps({"status": "ok"}), media_type="application/json", status_code=200)
+
+
+@api_chat.get("/store/factchecker", response_class=Response)
+async def get_factchecker(request: Request, common: CommonQueryParams, runId: str):
+    update_telemetry_state(
+        request=request,
+        telemetry_type="api",
+        api="read_factchecker",
+        **common.__dict__,
+    )
+
+    fact_checker_key = f"factchecker_{runId}"
+
+    data = await DataStoreAdapters.aretrieve_public_data(fact_checker_key)
+    if data is None:
+        return Response(status_code=404)
+    return Response(content=json.dumps(data.value), media_type="application/json", status_code=200)
 
 
 @api_chat.post("/conversation/file-filters", response_class=Response)
@@ -719,22 +763,16 @@ async def websocket_endpoint(
             conversation_commands.remove(ConversationCommand.Notes)
 
         if ConversationCommand.Online in conversation_commands:
-            if not online_search_enabled():
-                conversation_commands.remove(ConversationCommand.Online)
-                # If online search is not enabled, try to read webpages directly
-                if ConversationCommand.Webpage not in conversation_commands:
-                    conversation_commands.append(ConversationCommand.Webpage)
-            else:
-                try:
-                    online_results = await search_online(
-                        defiltered_query, meta_log, location, send_status_update, custom_filters
-                    )
-                except ValueError as e:
-                    logger.warning(f"Error searching online: {e}. Attempting to respond without online results")
-                    await send_complete_llm_response(
-                        f"Error searching online: {e}. Attempting to respond without online results"
-                    )
-                    continue
+            try:
+                online_results = await search_online(
+                    defiltered_query, meta_log, location, send_status_update, custom_filters
+                )
+            except ValueError as e:
+                logger.warning(f"Error searching online: {e}. Attempting to respond without online results")
+                await send_complete_llm_response(
+                    f"Error searching online: {e}. Attempting to respond without online results"
+                )
+                continue
 
         if ConversationCommand.Webpage in conversation_commands:
             try:
@@ -890,8 +928,18 @@ async def chat(
         _custom_filters.append("site:khoj.dev")
         conversation_commands.append(ConversationCommand.Online)
 
-    conversation = await ConversationAdapters.aget_conversation_by_user(user, conversation_id=conversation_id)
+    conversation = await ConversationAdapters.aget_conversation_by_user(
+        user, request.user.client_app, conversation_id, title
+    )
     conversation_id = conversation.id if conversation else None
+
+    if not conversation:
+        return Response(
+            content=f"No conversation found with requested id, title", media_type="text/plain", status_code=400
+        )
+    else:
+        meta_log = conversation.conversation_log
+
     if ConversationCommand.Summarize in conversation_commands:
         file_filters = conversation.file_filters
         llm_response = ""
@@ -932,17 +980,6 @@ async def chat(
             **common.__dict__,
         )
         return StreamingResponse(content=llm_response, media_type="text/event-stream", status_code=200)
-
-    conversation = await ConversationAdapters.aget_conversation_by_user(
-        user, request.user.client_app, conversation_id, title
-    )
-    conversation_id = conversation.id if conversation else None
-    if not conversation:
-        return Response(
-            content=f"No conversation found with requested id, title", media_type="text/plain", status_code=400
-        )
-    else:
-        meta_log = conversation.conversation_log
 
     is_automated_task = conversation_commands == [ConversationCommand.AutomatedTask]
 
@@ -1020,18 +1057,10 @@ async def chat(
         conversation_commands.remove(ConversationCommand.Notes)
 
     if ConversationCommand.Online in conversation_commands:
-        if not online_search_enabled():
-            conversation_commands.remove(ConversationCommand.Online)
-            # If online search is not enabled, try to read webpages directly
-            if ConversationCommand.Webpage not in conversation_commands:
-                conversation_commands.append(ConversationCommand.Webpage)
-        else:
-            try:
-                online_results = await search_online(
-                    defiltered_query, meta_log, location, custom_filters=_custom_filters
-                )
-            except ValueError as e:
-                logger.warning(f"Error searching online: {e}. Attempting to respond without online results")
+        try:
+            online_results = await search_online(defiltered_query, meta_log, location, custom_filters=_custom_filters)
+        except ValueError as e:
+            logger.warning(f"Error searching online: {e}. Attempting to respond without online results")
 
     if ConversationCommand.Webpage in conversation_commands:
         try:

@@ -27,6 +27,7 @@ from khoj.database.models import (
     ChatModelOptions,
     ClientApplication,
     Conversation,
+    DataStore,
     Entry,
     FileObject,
     GithubConfig,
@@ -47,6 +48,7 @@ from khoj.database.models import (
     UserConversationConfig,
     UserRequests,
     UserSearchModelConfig,
+    UserTextToImageModelConfig,
     UserVoiceModelConfig,
     VoiceModelOption,
 )
@@ -599,6 +601,19 @@ class PublicConversationAdapters:
         return f"/share/chat/{public_conversation.slug}/"
 
 
+class DataStoreAdapters:
+    @staticmethod
+    async def astore_data(data: dict, key: str, user: KhojUser, private: bool = True):
+        if await DataStore.objects.filter(key=key).aexists():
+            return key
+        await DataStore.objects.acreate(value=data, key=key, owner=user, private=private)
+        return key
+
+    @staticmethod
+    async def aretrieve_public_data(key: str):
+        return await DataStore.objects.filter(key=key, private=False).afirst()
+
+
 class ConversationAdapters:
     @staticmethod
     def make_public_conversation_copy(conversation: Conversation):
@@ -890,6 +905,34 @@ class ConversationAdapters:
     @staticmethod
     async def aget_text_to_image_model_config():
         return await TextToImageModelConfig.objects.filter().afirst()
+
+    @staticmethod
+    def get_text_to_image_model_options():
+        return TextToImageModelConfig.objects.all()
+
+    @staticmethod
+    def get_user_text_to_image_model_config(user: KhojUser):
+        config = UserTextToImageModelConfig.objects.filter(user=user).first()
+        if not config:
+            return None
+        return config.setting
+
+    @staticmethod
+    async def aget_user_text_to_image_model(user: KhojUser):
+        config = await UserTextToImageModelConfig.objects.filter(user=user).prefetch_related("setting").afirst()
+        if not config:
+            return None
+        return config.setting
+
+    @staticmethod
+    async def aset_user_text_to_image_model(user: KhojUser, text_to_image_model_config_id: int):
+        config = await TextToImageModelConfig.objects.filter(id=text_to_image_model_config_id).afirst()
+        if not config:
+            return None
+        new_config, _ = await UserTextToImageModelConfig.objects.aupdate_or_create(
+            user=user, defaults={"setting": config}
+        )
+        return new_config
 
 
 class FileObjectAdapters:

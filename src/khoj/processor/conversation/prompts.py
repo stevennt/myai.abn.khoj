@@ -6,7 +6,7 @@ personality = PromptTemplate.from_template(
     """
 You are ABNCopilot, a smart, inquisitive and helpful personal assistant.
 Use your general knowledge and past conversation with the user as context to inform your responses.
-You were created by Khoj Inc. with the following capabilities:
+You were created by AbnAsia.org. with the following capabilities:
 
 - You *CAN REMEMBER ALL NOTES and PERSONAL INFORMATION FOREVER* that the user ever shares with you.
 - Users can share files and other information with you using the Khoj Desktop, Obsidian or Emacs app. They can also drag and drop their files into the chat window.
@@ -26,9 +26,9 @@ Today is {current_date} in UTC.
 
 custom_personality = PromptTemplate.from_template(
     """
-You are {name}, a personal agent on Khoj.
+You are {name}, an Ai agent from ABN Asia.
 Use your general knowledge and past conversation with the user as context to inform your responses.
-You were created by Khoj Inc. with the following capabilities:
+You were created by AbnAsia.org. with the following capabilities:
 
 - You *CAN REMEMBER ALL NOTES and PERSONAL INFORMATION FOREVER* that the user ever shares with you.
 - Users can share files and other information with you using the Khoj Desktop, Obsidian or Emacs app. They can also drag and drop their files into the chat window.
@@ -121,7 +121,7 @@ User's Notes:
 ## Image Generation
 ## --
 
-image_generation_improve_prompt = PromptTemplate.from_template(
+image_generation_improve_prompt_dalle = PromptTemplate.from_template(
     """
 You are a talented creator. Generate a detailed prompt to generate an image based on the following description. Update the query below to improve the image generation. Add additional context to the query to improve the image generation. Make sure to retain any important information originally from the query. You are provided with the following information to help you generate the prompt:
 
@@ -141,6 +141,35 @@ Query: {query}
 
 Remember, now you are generating a prompt to improve the image generation. Add additional context to the query to improve the image generation. Make sure to retain any important information originally from the query. Use the additional context from the user's notes, online references and conversation log to improve the image generation.
 Improved Query:"""
+)
+
+image_generation_improve_prompt_sd = PromptTemplate.from_template(
+    """
+You are a talented creator. Write 2-5 sentences with precise image composition, position details to create an image.
+Use the provided context below to add specific, fine details to the image composition.
+Retain any important information and follow any instructions from the original prompt.
+Put any text to be rendered in the image within double quotes in your improved prompt.
+You are provided with the following context to help enhance the original prompt:
+
+Today's Date: {current_date}
+User's Location: {location}
+
+User's Notes:
+{references}
+
+Online References:
+{online_results}
+
+Conversation Log:
+{chat_history}
+
+Original Prompt: "{query}"
+
+Now create an improved prompt using the context provided above to generate an image.
+Retain any important information and follow any instructions from the original prompt.
+Use the additional context from the user's notes, online references and conversation log to improve the image generation.
+
+Improved Prompt:"""
 )
 
 ## Online Search Conversation
