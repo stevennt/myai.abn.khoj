@@ -1,5 +1,15 @@
 
 
+@indexer.
+@auth_router.
+@web_client.
+@subscription_router.
+@notion_router.
+@api_chat.
+@api_agents.
+
+
+
 =================================================================START
 https://chat.abnasia.org/
 
@@ -14,6 +24,13 @@ Need a way to backup data in an easy to control format.
 =================================================================START
 PULL from Khoj's master to ABN's khoj.master
 https://github.com/stevennt/myai.abn.khoj/compare/khoj.master...khoj-ai:khoj:master
+
+https://github.com/khoj-ai/khoj/issues
+https://discord.com/channels/1112065956647284756/1112065956647284759
+
+
+https://github.com/stevennt/myai.abn.khoj/issues
+
 
 
 =================================================================END
@@ -172,7 +189,10 @@ OpenAI Config:
 =================================================================START
 OpenAi:
 
-gpt-4-turbo-preview
+gpt-4o
+Maybe I should use: gpt-4o
+
+Don't use this anymore. gpt-4-turbo-preview
 
 GROQ: 
 
