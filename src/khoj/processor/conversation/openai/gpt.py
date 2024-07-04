@@ -20,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 def extract_questions(
     text,
-    model: Optional[str] = "gpt-4-turbo-preview",
+    model: Optional[str] = "gpt-4o",
+    #model: Optional[str] = "gpt-4-turbo-preview",
     conversation_log={},
     api_key=None,
     api_base_url=None,
@@ -36,7 +37,7 @@ def extract_questions(
     # Extract Past User Message and Inferred Questions from Conversation Log
     chat_history = "".join(
         [
-            f'Q: {chat["intent"]["query"]}\nKhoj: {{"queries": {chat["intent"].get("inferred-queries") or list([chat["intent"]["query"]])}}}\nA: {chat["message"]}\n\n'
+            f'Q: {chat["intent"]["query"]}\nABNCopilot: {{"queries": {chat["intent"].get("inferred-queries") or list([chat["intent"]["query"]])}}}\nA: {chat["message"]}\n\n'
             for chat in conversation_log.get("chat", [])[-4:]
             if chat["by"] == "khoj" and "text-to-image" not in chat["intent"].get("type")
         ]
@@ -109,7 +110,8 @@ def converse(
     user_query,
     online_results: Optional[Dict[str, Dict]] = None,
     conversation_log={},
-    model: str = "gpt-3.5-turbo",
+    #model: str = "gpt-3.5-turbo",
+    model: str = "gpt-4o",
     api_key: Optional[str] = None,
     api_base_url: Optional[str] = None,
     temperature: float = 0.2,
@@ -154,7 +156,7 @@ def converse(
         completion_func(chat_response=prompts.no_online_results_found.format())
         return iter([prompts.no_online_results_found.format()])
 
-    if ConversationCommand.Online in conversation_commands or ConversationCommand.Webpage in conversation_commands:
+    if not is_none_or_empty(online_results):
         conversation_primer = (
             f"{prompts.online_search_conversation.format(online_results=str(online_results))}\n{conversation_primer}"
         )
