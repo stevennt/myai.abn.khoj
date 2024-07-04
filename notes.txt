@@ -26,8 +26,11 @@ PULL from Khoj's master to ABN's khoj.master
 https://github.com/stevennt/myai.abn.khoj/compare/khoj.master...khoj-ai:khoj:master
 
 abn khoj:
-DEV to master: 
-  https://github.com/stevennt/myai.abn.khoj/compare/master...stevennt:myai.abn.khoj:DEV
+khoj.master to DEV:
+  https://github.com/stevennt/myai.abn.khoj/compare/DEV...stevennt:myai.abn.khoj:khoj.master
+
+DEV to abn.master: 
+  https://github.com/stevennt/myai.abn.khoj/compare/abn.master...stevennt:myai.abn.khoj:DEV
 
 
 
@@ -159,6 +162,16 @@ OpenAI Config:
   Name:           llama3-70b-8192
   API Base URL:   https://api.groq.com/openai/v1
   
+
+ABN LLM LiteLLM:
+  Chat model: gpt-llama3-70b-8192
+  Model type: OpenAi
+
+OpenAI Config: 
+  Name:           gpt-llama3-70b-8192
+  API Base URL:   https://llm.abnasia.org
+
+
 
 
 - https://docs.khoj.dev/get-started/setup
