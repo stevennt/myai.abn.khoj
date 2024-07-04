@@ -6,7 +6,7 @@ networks:
     external: false
 
 services:
-  abnkhojdatabase:
+  abncopilotdatabase:
     image: ankane/pgvector
     ports:
       - "5432:5432"
@@ -24,9 +24,9 @@ services:
     networks:
       - ainetwork
 
-  abnkhoj:
+  abncopilot:
     depends_on:
-      abnkhojdatabase:
+      abncopilotdatabase:
         condition: service_healthy
     # Use the following line to use the latest version of khoj. Otherwise, it will build from source.
     # image: ghcr.io/khoj-ai/khoj:latest
@@ -49,7 +49,7 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_HOST=abnkhojdatabase
+      - POSTGRES_HOST=abncopilotdatabase
       - POSTGRES_PORT=5432
       - KHOJ_DJANGO_SECRET_KEY=secret
       - KHOJ_DEBUG=False
@@ -59,9 +59,9 @@ services:
       # - KHOJ_NO_HTTPS=True
       - KHOJ_DOMAIN=chat.abnasia.org
     labels:
-      - traefik.http.routers.abnkhoj.rule=Host(`chat.abnasia.org`)
-      - traefik.http.routers.abnkhoj.tls=true
-      - traefik.http.routers.abnkhoj.tls.certresolver=lets-encrypt
+      - traefik.http.routers.abncopilot.rule=Host(`chat.abnasia.org`)
+      - traefik.http.routers.abncopilot.tls=true
+      - traefik.http.routers.abncopilot.tls.certresolver=lets-encrypt
     networks:
       - web
       - ainetwork
