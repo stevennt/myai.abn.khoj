@@ -904,7 +904,11 @@ class ConversationAdapters:
 
     @staticmethod
     async def aget_text_to_image_model_config():
-        return await TextToImageModelConfig.objects.filter().afirst()
+        return await TextToImageModelConfig.objects.filter().prefetch_related("openai_config").afirst()
+
+    @staticmethod
+    def get_text_to_image_model_config():
+        return TextToImageModelConfig.objects.filter().first()
 
     @staticmethod
     def get_text_to_image_model_options():
@@ -914,14 +918,20 @@ class ConversationAdapters:
     def get_user_text_to_image_model_config(user: KhojUser):
         config = UserTextToImageModelConfig.objects.filter(user=user).first()
         if not config:
-            return None
+            default_config = ConversationAdapters.get_text_to_image_model_config()
+            if not default_config:
+                return None
+            return default_config
         return config.setting
 
     @staticmethod
-    async def aget_user_text_to_image_model(user: KhojUser):
+    async def aget_user_text_to_image_model(user: KhojUser) -> Optional[TextToImageModelConfig]:
         config = await UserTextToImageModelConfig.objects.filter(user=user).prefetch_related("setting").afirst()
         if not config:
-            return None
+            default_config = await ConversationAdapters.aget_text_to_image_model_config()
+            if not default_config:
+                return None
+            return default_config
         return config.setting
 
     @staticmethod
