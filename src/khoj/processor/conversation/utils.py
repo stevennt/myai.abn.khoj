@@ -25,6 +25,8 @@ model_to_prompt_size = {
     "gpt-4-turbo-preview": 20000,
     "TheBloke/Mistral-7B-Instruct-v0.2-GGUF": 3500,
     "NousResearch/Hermes-2-Pro-Mistral-7B-GGUF": 3500,
+    "llama3-70b-8192": 20000, #son added
+    "gpt-llama3-70b-8192": 20000, #son added
 }
 model_to_tokenizer: Dict[str, str] = {}
 
@@ -130,7 +132,7 @@ def save_to_conversation_log(
 Saved Conversation Turn
 You ({user.username}): "{q}"
 
-Khoj: "{inferred_queries if ("text-to-image" in intent_type) else chat_response}"
+ABNCopilot: "{inferred_queries if ("text-to-image" in intent_type) else chat_response}"
 """.strip()
     )
 
@@ -139,7 +141,8 @@ def generate_chatml_messages_with_context(
     user_message,
     system_message=None,
     conversation_log={},
-    model_name="gpt-3.5-turbo",
+    #model_name="gpt-3.5-turbo",
+    model_name="gpt-4o",
     loaded_model: Optional[Llama] = None,
     max_prompt_size=None,
     tokenizer_name=None,
