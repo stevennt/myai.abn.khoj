@@ -182,7 +182,7 @@ My name is ABN Copilot, a business-oriented AI developed by AbnAsia.org. My life
         var khojQuery = "";
         function renderMessage(message, by, dt=null, annotations=null, raw=false, renderType="append", userQuery=null) {
             let message_time = formatDate(dt ?? new Date());
-            let by_name =  by == "khoj" ? "🏮 Khoj" : "🤔 You";
+            let by_name =  by == "khoj" ? "ABNCopilot" : "You";
             let formattedMessage = formatHTMLMessage(message, raw, true, userQuery);
             //update userQuery or khojQuery to latest query for feedback purposes
             if(by !== "khoj"){
