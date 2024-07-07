@@ -26,7 +26,7 @@ PULL from Khoj's master to ABN's khoj.master
 https://github.com/stevennt/myai.abn.khoj/compare/khoj.master...khoj-ai:khoj:master
 
 abn khoj:
-khoj.master to DEV:
+ABN's khoj.master to DEV:
   https://github.com/stevennt/myai.abn.khoj/compare/DEV...stevennt:myai.abn.khoj:khoj.master
 
 DEV to abn.master: 
