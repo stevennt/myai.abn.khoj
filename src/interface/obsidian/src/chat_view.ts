@@ -3,6 +3,7 @@ import * as DOMPurify from 'dompurify';
 import { KhojSetting } from 'src/settings';
 import { KhojPaneView } from 'src/pane_view';
 import { KhojView, createCopyParentText, getLinkToEntry, pasteTextAtCursor } from 'src/utils';
+import { KhojSearchModal } from './search_modal';
 
 export interface ChatJsonResult {
     image?: string;
@@ -24,13 +25,17 @@ export class KhojChatView extends KhojPaneView {
     setting: KhojSetting;
     waitingForLocation: boolean;
     location: Location;
+    keyPressTimeout: NodeJS.Timeout | null = null;
 
     constructor(leaf: WorkspaceLeaf, setting: KhojSetting) {
         super(leaf, setting);
 
-        // Register Modal Keybindings to send voice message
+        // Register chat view keybindings
         this.scope = new Scope(this.app.scope);
-        this.scope.register(["Mod"], 's', async (event) => { await this.speechToText(event); });
+        this.scope.register(["Ctrl"], 'n', (_) => this.createNewConversation());
+        this.scope.register(["Ctrl"], 'o', async (_) => await this.toggleChatSessions());
+        this.scope.register(["Ctrl"], 'f', (_) => new KhojSearchModal(this.app, this.setting).open());
+        this.scope.register(["Ctrl"], 'r', (_) => new KhojSearchModal(this.app, this.setting, true).open());
 
         this.waitingForLocation = true;
 
@@ -66,7 +71,6 @@ export class KhojChatView extends KhojPaneView {
     }
 
     async chat(isVoice: boolean = false) {
-
         // Get text in chat input element
         let input_el = <HTMLTextAreaElement>this.contentEl.getElementsByClassName("khoj-chat-input")[0];
 
@@ -109,9 +113,10 @@ export class KhojChatView extends KhojPaneView {
             text: "Chat Sessions",
             attr: {
                 class: "khoj-input-row-button clickable-icon",
+                title: "Show Conversations (^O)",
             },
         })
-        chatSessions.addEventListener('click', async (_) => { await this.toggleChatSessions(chatBodyEl) });
+        chatSessions.addEventListener('click', async (_) => { await this.toggleChatSessions() });
         setIcon(chatSessions, "history");
 
         let chatInput = inputRow.createEl("textarea", {
@@ -124,14 +129,20 @@ export class KhojChatView extends KhojPaneView {
         chatInput.addEventListener('input', (_) => { this.onChatInput() });
         chatInput.addEventListener('keydown', (event) => { this.incrementalChat(event) });
 
+        // Add event listeners for long press keybinding
+        this.contentEl.addEventListener('keydown', this.handleKeyDown.bind(this));
+        this.contentEl.addEventListener('keyup', this.handleKeyUp.bind(this));
+
         let transcribe = inputRow.createEl("button", {
             text: "Transcribe",
             attr: {
                 id: "khoj-transcribe",
                 class: "khoj-transcribe khoj-input-row-button clickable-icon ",
+                title: "Start Voice Chat (^S)",
             },
         })
-        transcribe.addEventListener('mousedown', async (event) => { await this.speechToText(event) });
+        transcribe.addEventListener('mousedown', (event) => { this.startSpeechToText(event) });
+        transcribe.addEventListener('mouseup', async (event) => { await this.stopSpeechToText(event) });
         transcribe.addEventListener('touchstart', async (event) => { await this.speechToText(event) });
         transcribe.addEventListener('touchend', async (event) => { await this.speechToText(event) });
         transcribe.addEventListener('touchcancel', async (event) => { await this.speechToText(event) });
@@ -163,6 +174,46 @@ export class KhojChatView extends KhojPaneView {
                 chatInput?.focus();
             });
         });
+    }
+
+    startSpeechToText(event: KeyboardEvent | MouseEvent | TouchEvent, timeout=200) {
+        if (!this.keyPressTimeout) {
+            this.keyPressTimeout = setTimeout(async () => {
+                // Reset auto send voice message timer, UI if running
+                if (this.sendMessageTimeout) {
+                    // Stop the auto send voice message countdown timer UI
+                    clearTimeout(this.sendMessageTimeout);
+                    const sendButton = <HTMLButtonElement>this.contentEl.getElementsByClassName("khoj-chat-send")[0]
+                    setIcon(sendButton, "arrow-up-circle")
+                    let sendImg = <SVGElement>sendButton.getElementsByClassName("lucide-arrow-up-circle")[0]
+                    sendImg.addEventListener('click', async (_) => { await this.chat() });
+                    // Reset chat input value
+                    const chatInput = <HTMLTextAreaElement>this.contentEl.getElementsByClassName("khoj-chat-input")[0];
+                    chatInput.value = "";
+                }
+                // Start new voice message
+                await this.speechToText(event);
+            }, timeout);
+        }
+    }
+    async stopSpeechToText(event: KeyboardEvent | MouseEvent | TouchEvent) {
+        if (this.mediaRecorder) {
+            await this.speechToText(event);
+        }
+        if (this.keyPressTimeout) {
+            clearTimeout(this.keyPressTimeout);
+            this.keyPressTimeout = null;
+        }
+    }
+
+    handleKeyDown(event: KeyboardEvent) {
+        // Start speech to text if keyboard shortcut is pressed
+        if (event.key === 's' && event.getModifierState('Control')) this.startSpeechToText(event);
+    }
+
+    async handleKeyUp(event: KeyboardEvent) {
+        // Stop speech to text if keyboard shortcut is released
+        if (event.key === 's' && event.getModifierState('Control')) await this.stopSpeechToText(event);
     }
 
     processOnlineReferences(referenceSection: HTMLElement, onlineContext: any) {
@@ -556,14 +607,16 @@ export class KhojChatView extends KhojPaneView {
         return `${time_string}, ${date_string}`;
     }
 
-    createNewConversation(chatBodyEl: HTMLElement) {
+    createNewConversation() {
+        let chatBodyEl = this.contentEl.getElementsByClassName("khoj-chat-body")[0] as HTMLElement;
         chatBodyEl.innerHTML = "";
         chatBodyEl.dataset.conversationId = "";
         chatBodyEl.dataset.conversationTitle = "";
         this.renderMessage(chatBodyEl, "Hey 👋🏾, what's up?", "khoj");
     }
 
-    async toggleChatSessions(chatBodyEl: HTMLElement, forceShow: boolean = false): Promise<boolean> {
+    async toggleChatSessions(forceShow: boolean = false): Promise<boolean> {
+        let chatBodyEl = this.contentEl.getElementsByClassName("khoj-chat-body")[0] as HTMLElement;
         if (!forceShow && this.contentEl.getElementsByClassName("side-panel")?.length > 0) {
             chatBodyEl.innerHTML = "";
             return this.getChatHistory(chatBodyEl);
@@ -577,9 +630,10 @@ export class KhojChatView extends KhojPaneView {
         const newConversationButtonEl = newConversationEl.createEl("button");
         newConversationButtonEl.classList.add("new-conversation-button");
         newConversationButtonEl.classList.add("side-panel-button");
-        newConversationButtonEl.addEventListener('click', (_) => this.createNewConversation(chatBodyEl));
+        newConversationButtonEl.addEventListener('click', (_) => this.createNewConversation());
         setIcon(newConversationButtonEl, "plus");
         newConversationButtonEl.innerHTML += "New";
+        newConversationButtonEl.title = "New Conversation (^N)";
 
         const existingConversationsEl = sidePanelEl.createDiv("existing-conversations");
         const conversationListEl = existingConversationsEl.createDiv("conversation-list");
@@ -739,7 +793,7 @@ export class KhojChatView extends KhojPaneView {
                     chatBodyEl.innerHTML = "";
                     chatBodyEl.dataset.conversationId = "";
                     chatBodyEl.dataset.conversationTitle = "";
-                    this.toggleChatSessions(chatBodyEl, true);
+                    this.toggleChatSessions(true);
                 })
                 .catch(err => {
                     return;
@@ -993,9 +1047,19 @@ export class KhojChatView extends KhojPaneView {
             });
 
             // Parse response from ABN backend
+            let noSpeechText: string[] = [
+                "Thanks for watching!",
+                "Thanks for watching.",
+                "Thank you for watching!",
+                "Thank you for watching.",
+                "You",
+                "Bye."
+            ];
+            let noSpeech: boolean = false;
             if (response.status === 200) {
                 console.log(response);
-                chatInput.value += response.json.text.trimStart();
+                noSpeech = noSpeechText.includes(response.json.text.trimStart());
+                if (!noSpeech) chatInput.value += response.json.text.trimStart();
                 this.autoResize();
             } else if (response.status === 501) {
                 throw new Error("⛔️ Configure speech-to-text model on server.");
@@ -1005,8 +1069,8 @@ export class KhojChatView extends KhojPaneView {
                 throw new Error("⛔️ Failed to transcribe audio.");
             }
 
-            // Don't auto-send empty messages
-            if (chatInput.value.length === 0) return;
+            // Don't auto-send empty messages or when no speech is detected
+            if (chatInput.value.length === 0 || noSpeech) return;
 
             // Show stop auto-send button. It stops auto-send when clicked
             setIcon(sendButton, "stop-circle");
@@ -1044,19 +1108,19 @@ export class KhojChatView extends KhojPaneView {
             });
 
             this.mediaRecorder.start();
-            setIcon(transcribeButton, "mic-off");
+            // setIcon(transcribeButton, "mic-off");
             transcribeButton.classList.add("loading-encircle")
         };
 
         // Toggle recording
-        if (!this.mediaRecorder || this.mediaRecorder.state === 'inactive' || event.type === 'touchstart') {
+        if (!this.mediaRecorder || this.mediaRecorder.state === 'inactive' || event.type === 'touchstart' || event.type === 'mousedown' || event.type === 'keydown') {
             navigator.mediaDevices
                 .getUserMedia({ audio: true })
                 ?.then(handleRecording)
                 .catch((e) => {
                     this.flashStatusInChatInput("⛔️ Failed to access microphone");
                 });
-        } else if (this.mediaRecorder.state === 'recording' || event.type === 'touchend' || event.type === 'touchcancel') {
+        } else if (this.mediaRecorder?.state === 'recording' || event.type === 'touchend' || event.type === 'touchcancel' || event.type === 'mouseup' || event.type === 'keyup') {
             this.mediaRecorder.stop();
             this.mediaRecorder.stream.getTracks().forEach(track => track.stop());
             this.mediaRecorder = undefined;
