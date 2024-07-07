@@ -3,7 +3,8 @@ FROM ubuntu:jammy
 LABEL org.opencontainers.image.source https://github.com/khoj-ai/khoj
 
 # Install System Dependencies
-RUN apt update -y && apt -y install python3-pip swig curl
+# RUN apt update -y && apt -y install python3-pip swig curl
+RUN apt update -y && apt -y install python3-pip swig curl libgl1-mesa-glx libglib2.0-0
 
 # Install Node.js and Yarn
 RUN curl -sL https://deb.nodesource.com/setup_22.x | bash -

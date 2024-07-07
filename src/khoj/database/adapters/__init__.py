@@ -515,7 +515,7 @@ class ClientApplicationAdapters:
 
 class AgentAdapters:
     DEFAULT_AGENT_NAME = "ABN Copilot"
-    DEFAULT_AGENT_AVATAR = "https://assets.khoj.dev/lamp-128.png"
+    DEFAULT_AGENT_AVATAR = "https://cdn.jsdelivr.net/gh/abncharts/abncharts.public.1/abnasia.org/goldengriffin.png"
     DEFAULT_AGENT_SLUG = "abncopilot"
 
     @staticmethod

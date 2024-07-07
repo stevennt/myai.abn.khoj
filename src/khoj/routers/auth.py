@@ -50,7 +50,7 @@ if not state.anonymous_mode:
         ]
     if missing_requirements:
         requirements_string = "\n   - " + "\n   - ".join(missing_requirements)
-        error_msg = f"🚨 Start Khoj with --anonymous-mode flag or to enable authentication:{requirements_string}"
+        error_msg = f"🚨 Start ABNCopilot with --anonymous-mode flag or to enable authentication:{requirements_string}"
         logger.error(error_msg)
 
     config = Config(environ=os.environ)

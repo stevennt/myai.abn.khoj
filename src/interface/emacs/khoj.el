@@ -1,6 +1,6 @@
 ;;; khoj.el --- AI copilot for your Second Brain -*- lexical-binding: t -*-
 
-;; Copyright (C) 2021-2023 Khoj Inc.
+;; Copyright (C) 2021-2023 AbnAsia.org
 
 ;; Author: Debanjum Singh Solanky <debanjum@khoj.dev>
 ;;         Saba Imran <saba@khoj.dev>
