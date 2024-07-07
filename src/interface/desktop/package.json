@@ -1,17 +1,12 @@
 {
-<<<<<<< HEAD
-  "name": "ABNCopilot",
-  "version": "1.14.0",
-=======
-  "name": "Khoj",
-  "version": "1.15.0",
->>>>>>> 4f89319b40cd05adeb6ff15a19b583eedfdd0520
+  "name": "abncopilot",
+  "version": "1.16.0",
   "description": "An AI copilot for your Second Brain",
-  "author": "Saba Imran, Debanjum Singh Solanky <team@khoj.dev>",
+  "author": "ABNCopilot",
   "license": "GPL-3.0-or-later",
-  "homepage": "https://khoj.dev",
-  "repository": "\"https://github.com/khoj-ai/khoj\"",
-  "productName": "Khoj",
+  "homepage": "https://abnasia.org",
+  "repository": "\"https://abnasia.org\"",
+  "productName": "ABNCopilot",
   "main": "main.js",
   "private": false,
   "devDependencies": {
