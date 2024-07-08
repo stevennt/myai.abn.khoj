@@ -8,6 +8,7 @@ networks:
 services:
   abncopilotdatabase:
     image: ankane/pgvector
+    container_name: abncopilotdatabase
     ports:
       - "5432:5432"
     environment:
@@ -35,6 +36,7 @@ services:
     build:
       context: .
       # dockerfile: prod.Dockerfile
+    container_name: abncopilot
     restart: always
     ports:
       # If changing the local port (left hand side), no other changes required.
