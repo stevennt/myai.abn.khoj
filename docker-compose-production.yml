@@ -21,6 +21,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    restart: always
     networks:
       - ainetwork
 
@@ -34,6 +35,7 @@ services:
     build:
       context: .
       # dockerfile: prod.Dockerfile
+    restart: always
     ports:
       # If changing the local port (left hand side), no other changes required.
       # If changing the remote port (right hand side),
@@ -53,8 +55,8 @@ services:
       - POSTGRES_PORT=5432
       - KHOJ_DJANGO_SECRET_KEY=secret
       - KHOJ_DEBUG=False
-      - KHOJ_ADMIN_EMAIL=username@example.com
-      - KHOJ_ADMIN_PASSWORD=password
+      - KHOJ_ADMIN_EMAIL=thanhson@gmail.com
+      - KHOJ_ADMIN_PASSWORD=KbZuKCwRA6mF
       # Uncomment the following lines to make your instance publicly accessible. Replace the domain with your domain. Proceed with caution, especially if you are using anonymous mode.
       # - KHOJ_NO_HTTPS=True
       - KHOJ_DOMAIN=chat.abnasia.org
