@@ -1,14 +1,9 @@
 {
 	"id": "khoj",
-<<<<<<< HEAD
 	"name": "ABNCopilot",
-	"version": "1.15.0",
-=======
-	"name": "Khoj",
 	"version": "1.16.0",
->>>>>>> 9e31ebff936c4aa5e504aefc2f5fd88f1f9d2112
 	"minAppVersion": "0.15.0",
-	"description": "An AI copilot for your Second Brain",
+	"description": "An AI copilot as your Assistant",
 	"author": "AbnAsia.org",
 	"authorUrl": "https://abnasia.org",
 	"isDesktopOnly": false
