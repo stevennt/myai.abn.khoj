@@ -66,7 +66,8 @@ else:
 django_app = get_asgi_application()
 
 # Add CORS middleware
-KHOJ_DOMAIN = os.getenv("KHOJ_DOMAIN", "app.khoj.dev")
+# KHOJ_DOMAIN = os.getenv("KHOJ_DOMAIN", "app.khoj.dev")
+KHOJ_DOMAIN = os.getenv("KHOJ_DOMAIN", "chat.abnasia.org")
 scheme = "https" if not is_env_var_true("KHOJ_NO_HTTPS") else "http"
 custom_origins = [f"{scheme}://{KHOJ_DOMAIN.strip()}", f"{scheme}://{KHOJ_DOMAIN.strip()}:*"]
 default_origins = [
@@ -76,6 +77,7 @@ default_origins = [
     "http://localhost:*",  # To allow access from localhost
     "http://127.0.0.1:*",  # To allow access from localhost
     "app://khoj.dev",  # To allow access from Khoj desktop app
+    "app://abnasia.org",
 ]
 
 app.add_middleware(
@@ -103,7 +105,7 @@ SCHEDULE_LEADER_NAME = ProcessLock.Operation.SCHEDULE_LEADER
 
 
 def shutdown_scheduler():
-    logger.info("🌑 Shutting down Khoj")
+    logger.info("🌑 Shutting down ABN Copilot")
 
     if state.schedule_leader_process_lock:
         logger.info("🔓 Schedule Leader released")
@@ -224,7 +226,7 @@ def start_server(app, host=None, port=None, socket=None):
             log_config=None,
             timeout_keep_alive=60,
         )
-    logger.info("🌒 Stopping Khoj")
+    logger.info("🌒 Stopping ABN Copilot")
 
 
 def poll_task_scheduler():

@@ -35,7 +35,7 @@ services:
     # Uncomment the following line to build from source. This will take a few minutes. Comment the next two lines out if you want to use the offiicial image.
     build:
       context: .
-      # dockerfile: prod.Dockerfile
+      dockerfile: prod.Dockerfile
     container_name: abncopilot
     restart: always
     ports:
@@ -70,7 +70,8 @@ services:
       - web
       - ainetwork
 
-    command: --host="0.0.0.0" --port=42110 -vv --anonymous-mode
+    #command: --host="0.0.0.0" --port=42110 -vv --anonymous-mode
+    command: --host="0.0.0.0" --port=42110 -vv
 
 
 volumes:
