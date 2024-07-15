@@ -16,18 +16,7 @@ import TabItem from '@theme/TabItem';
 
 ## Setup
 These are the general setup instructions for self-hosted Khoj.
-<<<<<<< HEAD
-
-- Make sure [python](https://realpython.com/installing-python/) and [pip](https://pip.pypa.io/en/stable/installation/) are installed on your machine
-- Check the [Khoj Emacs docs](/clients/emacs#setup) to setup Khoj with Emacs<br />
-  It's simpler as it can skip the server *install*, *run* and *configure* step below.
-- Check the [Khoj Obsidian docs](/clients/obsidian#setup) to setup Khoj with Obsidian<br />
-  Its simpler as it can skip the *configure* step below.
-
-For Installation, you can either use Docker or install the ABN server locally.
-=======
 You can install the Khoj server using either Docker or Pip.
->>>>>>> d6fe5d9a638cf80406d2f4adb9dd60e33fd0c99e
 
 :::info[Offline Model + GPU]
 If you want to use the offline chat model and you have a GPU, you should use Installation Option 2  - local setup via the Python package directly. Our Docker image doesn't currently support running the offline chat model on GPU, making inference times really slow.
@@ -41,13 +30,6 @@ If you want to use the offline chat model and you have a GPU, you should use Ins
 
 #### Setup
 
-<<<<<<< HEAD
-Use the sample docker-compose [in Github](https://github.com/khoj-ai/khoj/blob/master/docker-compose.yml) to run Khoj in Docker. Start by configuring all the environment variables to your choosing. Your admin account will automatically be created based on the admin credentials in that file, so pay attention to those. To start the container, run the following command in the same directory as the docker-compose.yml file. This will automatically setup the database and run the ABN server.
-
-```shell
-docker-compose up
-```
-=======
 1. Get the sample docker-compose file [from Github](https://github.com/khoj-ai/khoj/blob/master/docker-compose.yml).
 2. Configure the environment variables in the docker-compose.yml to your choosing.<br />
    Note: *Your admin account will automatically be created based on the admin credentials in that file, so pay attention to those.*
@@ -55,7 +37,6 @@ docker-compose up
    ```shell
    docker-compose up
    ```
->>>>>>> d6fe5d9a638cf80406d2f4adb9dd60e33fd0c99e
 
 Khoj should now be running at http://localhost:42110! You can see the web UI in your browser.
 
@@ -117,11 +98,7 @@ sudo -u postgres createdb khoj --password
 - *Make sure [python](https://realpython.com/installing-python/) and [pip](https://pip.pypa.io/en/stable/installation/) are installed on your machine*
 - Check [llama-cpp-python setup](https://python.langchain.com/docs/integrations/llms/llamacpp#installation) if you hit any llama-cpp issues with the installation
 
-<<<<<<< HEAD
-Run the following command in your terminal to install the ABN backend.
-=======
 Run the following command in your terminal to install the Khoj server.
->>>>>>> d6fe5d9a638cf80406d2f4adb9dd60e33fd0c99e
 
 ```mdx-code-block
   <Tabs groupId="operating-systems">
@@ -258,16 +235,7 @@ You can sync your files and folders with Khoj using the [Desktop](/clients/deskt
 
 Now open http://localhost:42110 to start interacting with Khoj!
 
-<<<<<<< HEAD
-**To download the latest desktop client, go to https://download.khoj.dev** and the correct executable for your OS will automatically start downloading. You can also go to https://khoj.dev/downloads to explicitly download your image of choice. Once downloaded, you can configure your folders for indexing using the settings tab. To set your chat configuration, you'll have to use the web interface for the ABN server you setup in the previous step.
-
-To use the desktop client, you need to go to your ABN server's settings page (http://localhost:42110/config) and copy the API key. Then, paste it into the desktop client's settings page. Once you've done that, you can select files and folders to index. Set the desktop client settings to use `http://127.0.0.1:42110` as the host URL.
-
-
-### 4. Install Client Plugins (Optional)
-=======
 ### 4. Install Khoj Clients (Optional)
->>>>>>> d6fe5d9a638cf80406d2f4adb9dd60e33fd0c99e
 Khoj exposes a web interface to search, chat and configure by default.<br />
 You can install a Khoj client to sync your documents or to easily access Khoj from within Obsidian, Emacs or your OS.
 
@@ -281,20 +249,9 @@ You can install a Khoj client to sync your documents or to easily access Khoj fr
 [Install](/clients/emacs#setup) khoj.el
 
 #### Setup host URL
-<<<<<<< HEAD
-To configure your host URL on your clients when self-hosting, use `http://127.0.0.1:42110`. This is the default port for the ABN server. Note that `localhost` will not work.
-
-### 5. Use Khoj 🚀
-
-You can head to http://localhost:42110 to use the web interface. You can also use the desktop client to search and chat.
-
-## Upgrade
-### Upgrade ABN Server
-=======
 Set the host URL on your clients settings page to your Khoj server URL. By default, use `http://127.0.0.1:42110` or `http://localhost:42110`. Note that `localhost` may not work in all cases.
 
 ## Upgrade
->>>>>>> d6fe5d9a638cf80406d2f4adb9dd60e33fd0c99e
 
 ```mdx-code-block
   <Tabs groupId="environment">
@@ -322,10 +279,6 @@ Set the host URL on your clients settings page to your Khoj server URL. By defau
 ```
 
 ## Uninstall
-<<<<<<< HEAD
-### Uninstall ABN Server
-=======
->>>>>>> d6fe5d9a638cf80406d2f4adb9dd60e33fd0c99e
 
 ```mdx-code-block
   <Tabs groupId="environment">
