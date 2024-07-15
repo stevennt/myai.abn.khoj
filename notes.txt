@@ -46,7 +46,32 @@ https://github.com/stevennt/myai.abn.khoj/issues
 
 
 =================================================================START
+KHOJ SELF-HOST NON-DOCKER:
 
+https://docs.khoj.dev/get-started/setup/
+- PostgreSQL in docker
+docker-compose -f docker-compose-postgres-only.yml up
+- 
+docker exec -ti -u postgres abncopilotdatabase bash
+psql 
+CREATE DATABASE khoj;
+exit
+  (from psql)
+exit 
+  (from container)
+
+
+export POSTGRES_PASSWORD=postgres
+  Make sure to set the environment variable POSTGRES_PASSWORD to the same value as the password you set here.
+
+
+python3 -m pip install khoj-assistant
+export KHOJ_ADMIN_EMAIL=thanhson@gmail.com
+export KHOJ_ADMIN_PASSWORD=KbZuKCwRA6mF
+khoj --anonymous-mode
+  not running yet, many error
+or:
+/home/thanhson/.local/bin/khoj --anonymous-mode
 
 =================================================================END
 
