@@ -284,13 +284,13 @@ Auto invokes setup steps on calling main entrypoint."
     (if (/= (apply #'call-process khoj-server-python-command
                    nil t nil
                    "-m" "pip" "install" "--upgrade"
-                   '("khoj-assistant"))
+                   '("khoj"))
             0)
-        (message "khoj.el: Failed to install ABN server. Please install it manually using pip install `khoj-assistant'.\n%s" (buffer-string))
+        (message "khoj.el: Failed to install ABN server. Please install it manually using pip install `khoj'.\n%s" (buffer-string))
       (message "khoj.el: Installed and upgraded ABN server version: %s" (khoj--server-get-version)))))
 
 (defun khoj--server-start ()
-  "Start the khoj server."
+  "Start the ABN server."
   (interactive)
   (let* ((url-parts (split-string (cadr (split-string khoj-server-url "://")) ":"))
          (server-host (nth 0 url-parts))
